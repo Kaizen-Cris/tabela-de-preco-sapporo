@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selecione seu estado</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+  }
+
+  .container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+  }
+
+  h1 {
+    margin-bottom: 24px;
+  }
+
+  .estados {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 16px;
+    width: 100%;
+    max-width: 600px;
+  }
+
+  .estado {
+    padding: 16px;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.2s;
+  }
+
+  .estado:hover {
+    background: #111;
+    color: #fff;
+  }
+</style>
+</head>
+
+<body>
+<div class="container">
+  <h1>Selecione seu estado</h1>
+
+  <div class="estados">
+    <div class="estado" onclick="ir('sp-sn')">São Paulo</div>
+    <div class="estado" onclick="ir('rj')">Rio de Janeiro</div>
+    <div class="estado" onclick="ir('pr')">Paraná</div>
+    <!-- adicione outros estados aqui -->
+  </div>
+</div>
+
+<script>
+function ir(estado) {
+  window.location.href = `tabela.html?estado=${estado}`;
+}
+</script>
+</body>
+</html>
