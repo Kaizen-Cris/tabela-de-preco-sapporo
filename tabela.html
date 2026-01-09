@@ -200,7 +200,8 @@ fetch(SHEET_URL)
 
 
     html += "</tbody></table>";
-    document.getElementById("conteudo").innerHTML = html;
+      conteudo.classList.remove("loading");
+      conteudo.innerHTML = html;
   })
   .catch(err => {
     document.getElementById("conteudo").innerText =
@@ -208,8 +209,7 @@ fetch(SHEET_URL)
     console.error(err);
   });
 
-  conteudo.classList.remove("loading");
-  conteudo.innerHTML = html;
+
 
 
 </script>
