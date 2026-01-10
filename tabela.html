@@ -20,11 +20,23 @@
   .topo {
     background: #ffffff;
     padding: 16px 24px;
-    display: flex;
-    justify-content: space-between;
     align-items: center;
   }
-  
+  #social {
+    float: right;
+    text-align: right;
+  }
+  .icon_left {
+    vertical-align: text-top;
+    margin: 0px 5px 0px 0px;
+  }
+  a {
+  text-decoration: none;
+  }
+  .icon_right {
+    vertical-align: text-top;
+    margin: 0px 0px 0px 5px;
+  }
   .logo{
     background: #ffffff;
     padding: 16px 24px;
@@ -40,7 +52,9 @@
   .logo-img {
     max-width: 180px;   /* tamanho padrão desktop */
     width: 100%;
-    height: auto;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
   }
   h1 {
     margin-bottom: 16px;
@@ -143,24 +157,36 @@
 
 <body>
   <div class="topo">
-    <div>
-      <h1 id="titulo-estado">Tabela de Preços</h1>
-      
-      <a href="index.html" style="
-        display: inline-block;
-        font-size: 14px;
-        color: #2563eb;
-        text-decoration: none;">
-        ← Trocar estado
+    <div id="social">
+      Sapporo nas redes sociais
+      <a href="https://www.facebook.com/sapporoalimentos/?locale=pt_BR" target="_blank">
+        <img class="icon_left" src="img/facebook.svg" width="17" height="17">
       </a>
-      </div>
-    <div id="logo">
-      <div id="picture">
+      <a href="https://www.instagram.com/sapporooficial/" target="_blank">
+        <img class="icon_right" src="img/instagram.svg" width="17" height="17">
+      </a>
+    </div>
+    <header>
+      <div id="logo">
+        <div id="picture">
         <img src="https://sapporo.com.br/wp-content/uploads/2021/12/logo-SAPPORO-200x77.png" 
         alt="Sapporo" 
         class="logo-img"> 
+        </div>
       </div>
-    </div>
+      <div>
+        <h1 id="titulo-estado">Tabela de Preços</h1>
+      
+          <a href="index.html" style="
+          display: inline-block;
+          font-size: 14px;
+          color: #2563eb;
+          text-decoration: none;">
+          ← Trocar estado
+        </a>
+      </div>
+    
+    </header>
   </div>
   <div class="sub">
     <p>Valores calculados automaticamente conforme o estado</p>
