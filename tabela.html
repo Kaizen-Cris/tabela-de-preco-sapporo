@@ -6,30 +6,65 @@
 <title>Tabela de Preços</title>
 
 <style>
+  :root{
+      --brand-red: #e30915;
+      --bg-light: #f4f4f4;
+      --white: #ffffff;
+      --black: #000000; 
+  }
   body {
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
-    background: #f7f7f7;
-    color: #111;
+    font-family: Inter, system-ui, -apple-system, "Helvetica Neue", Arial;
+    color: var(--black);
   }
-
   .topo {
     background: #ffffff;
-    padding: 16px 20px;
-    border-bottom: 1px solid #ddd;
+    padding: 16px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
-
+  
+  .logo{
+    background: #ffffff;
+    padding: 16px 24px;
+    justify-content: space-between;
+    align-items: center;
+  }
   .titulo-estado {
     margin: 0;
     font-size: 20px;
+    margin-bottom: 16px;
+    float: left;
+  }
+  .picture {
+    float: right;
+  }
+  h1 {
+    margin-bottom: 16px;
   }
 
   .subtitulo {
     margin: 4px 0 0;
     font-size: 13px;
-    color: #555;
+    color: var(--black);
+  }
+  .sub {
+    margin-left: 15px;
+    margin-bottom: 10px;
+
+
+  }
+  .loading {
+    padding: 40px;
+    text-align: center;
+    font-size: 18px;
   }
 
+  
+
+  
+  
   .info-estado {
   margin-top: 10px;
   padding: 10px 14px;
@@ -43,27 +78,49 @@
   padding: 20px;
   }
 
-  h1 {
-    margin-bottom: 16px;
-  }
   table {
     width: 100%;
+    margin-top: 18px;
     border-collapse: collapse;
     background: #fff;
   }
-  th, td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
+  /* Linhas alternadas da tabela */
+  tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: #f5f6f8;
   }
   th {
-    background: #f0f0f0;
-  }
-  .loading {
-    padding: 40px;
+    background: var(--brand-red);
+    font-weight: 600;
+    border-radius: 8px;
     text-align: center;
-    font-size: 18px;
+    padding: 10px;
+    
   }
+  
+  td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+  }
+
+  
+
+  /* Congelar cabeçalho da tabela */
+  thead th {
+    position: sticky;
+    top: 0;
+    background-color: #e30915; /* vermelho */
+    color: #ffffff;           /* texto branco */
+    z-index: 2;
+  }
+  .valor {
+    text-align: center;
+  }
+
   tbody tr:hover {
   background: #f9fafb;
   }
@@ -75,21 +132,62 @@
 </head>
 
 <body>
-<div class="topo">
-  <h1 id="titulo-estado">Tabela de Preços</h1>
-  <p id="subtitulo">Valores calculados automaticamente conforme o estado</p>
-  <div style="margin-top: 10px;">
-  <a href="index.html" style="
-    display: inline-block;
-    font-size: 13px;
-    color: #2563eb;
-    text-decoration: none;
-  ">
-    ← Trocar estado
-  </a>
-</div>
-  <div id="conteudo" class="loading">Carregando dados…</div>
-</div>
+  <div class="topo">
+    <div>
+      <h1 id="titulo-estado">Tabela de Preços</h1>
+      
+      <a href="index.html" style="
+        display: inline-block;
+        font-size: 14px;
+        color: #2563eb;
+        text-decoration: none;">
+        ← Trocar estado
+      </a>
+      </div>
+    <div id="logo">
+      <div id="picture">
+        <img src="https://sapporo.com.br/wp-content/uploads/2021/12/logo-SAPPORO-200x77.png" 
+        alt="Sapporo" 
+        style="
+          width: 100%;
+          height:100%;"> 
+      </div>
+    </div>
+  </div>
+  <div class="sub">
+    <p>Valores calculados automaticamente conforme o estado</p>
+    <b>•</b>
+    Faturamento mínimo R$ 500,00
+    <br>
+    <b>•</b>
+    Primeira compra á vista
+    <br>
+    <b>•</b>
+    Informações dos produtos para cadastro
+    <a href="https://sites.google.com/view/teste1212123/detalhes-produtos?authuser=0">aqui</a>
+    <br>
+    <b>•</b>
+    Compras sem valor mínimo somente na
+    <a href="https://loja.sapporo.com.br">Loja online</a>
+    <br>
+    <b>•</b>
+    Caso queira mais Informações falar com
+    <a href="https://api.whatsapp.com/send?phone=5511947922506" target="_blank">Ana</a>
+    ou a 
+    <a href="https://api.whatsapp.com/send?phone=5511947903094" target="_blank">Alexandra</a>
+    <br>
+  </div>
+  
+    
+  
+  
+      <div id="conteudo" class="loading">
+      Carregando dados…
+    </div>
+  
+
+
+  
 
 
 <script>
@@ -156,6 +254,7 @@ fetch(SHEET_URL)
       <table>
         <thead>
           <tr>
+            <th>Código</th>
             <th>Produto</th>
             <th>Preço base</th>
             <th>Preço final</th>
@@ -182,12 +281,13 @@ fetch(SHEET_URL)
     linhasRenderizadas++;
 
     const precoFinal = calcularPreco(precoBase, aliqInter, iva, aliqDest);
-
+    /* parte que monta a tabela */
   html += `
     <tr>
+      <td class="valor">${row.codigo}</td>
       <td>${row.produto}</td>
-      <td>R$ ${precoBase.toFixed(2)}</td>
-      <td><strong>R$ ${precoFinal.toFixed(2)}</strong></td>
+      <td class="valor">R$ ${precoBase.toFixed(2)}</td>
+      <td class="valor"><strong>R$ ${precoFinal.toFixed(2)}</strong></td>
     </tr>
     `;
   });
