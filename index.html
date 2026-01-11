@@ -41,11 +41,17 @@
     background: #ffffff;
     border: 1px solid #ddd;
     border-radius: 8px;
-    text-align: center;
     cursor: pointer;
     font-size: 18px;
-    transition: 0.2s;
-  }
+
+    display: flex;
+    justify-content: center; /* horizontal */
+    align-items: center;     /* vertical */
+
+    min-height: 40px;        /* 🔥 ESSENCIAL */
+    text-align: center;      /* quebra de linha centralizada */
+}
+
 
   .estado:hover {
     background: #111;
@@ -62,13 +68,22 @@
     <div class="estado" onclick="ir('sp-sn')">São Paulo</div>
     <div class="estado" onclick="ir('rj')">Rio de Janeiro</div>
     <div class="estado" onclick="ir('pr')">Paraná</div>
+    <div class="estado" onclick="ir('externo')">Informações para Cadastro</div>
     <!-- adicione outros estados aqui -->
   </div>
 </div>
 
 <script>
-function ir(estado) {
-  window.location.href = `tabela.html?uf=${estado}`;
+function ir(destino) {
+
+  // se for site externo
+  if (destino === 'externo') {
+    window.location.href = 'cadastro.html';
+    return;
+  }
+
+  // se for estado normal
+  window.location.href = `tabela.html?uf=${destino}`;
 }
 </script>
 </body>
