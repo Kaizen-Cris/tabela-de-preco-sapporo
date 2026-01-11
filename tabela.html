@@ -22,17 +22,21 @@
     padding: 16px 24px;
     align-items: center;
   }
-  #social {
+  .redes-sociais {
     float: right;
     text-align: right;
+    font-size: 17px;
   }
+  .redes-sociais a {
+  text-decoration: none;
+  }
+
+
   .icon_left {
     vertical-align: text-top;
     margin: 0px 5px 0px 0px;
   }
-  a {
-  text-decoration: none;
-  }
+  
   .icon_right {
     vertical-align: text-top;
     margin: 0px 0px 0px 5px;
@@ -121,7 +125,10 @@
   text-align: left;
   border-bottom: 1px solid #e0e0e0;
   }
-
+  .small{
+    font-size:13px;
+    color:#666
+  }
   
 
   /* Congelar cabeçalho da tabela */
@@ -157,7 +164,7 @@
 
 <body>
   <div class="topo">
-    <div id="social">
+    <div class="redes-sociais">
       Sapporo nas redes sociais
       <a href="https://www.facebook.com/sapporoalimentos/?locale=pt_BR" target="_blank">
         <img class="icon_left" src="img/facebook.svg" width="17" height="17">
@@ -179,7 +186,7 @@
       
           <a href="index.html" style="
           display: inline-block;
-          font-size: 14px;
+          font-size: 16px;
           color: #2563eb;
           text-decoration: none;">
           ← Trocar estado
@@ -190,12 +197,6 @@
   </div>
   <div class="sub">
     <p>Valores calculados automaticamente conforme o estado</p>
-    <b>•</b>
-    Faturamento mínimo R$ 500,00
-    <br>
-    <b>•</b>
-    Primeira compra á vista
-    <br>
     <b>•</b>
     Informações dos produtos para cadastro
     <a href="https://sites.google.com/view/teste1212123/detalhes-produtos?authuser=0">aqui</a>
@@ -218,7 +219,11 @@
       <div id="conteudo" class="loading">
       Carregando dados…
     </div>
-  
+    <div style="margin:14px 20px;display:flex;justify-content:space-between;align-items:center">
+      <div class="small">Valores calculados automaticamente com base nas alíquotas vigentes.Última atualização conforme base administrativa.</div>
+      <div class="small">Observação: o cálculo aplica ICMS + IVA diretamente sobre o preço base.</div>
+    </div>
+
 
 
   
@@ -348,10 +353,7 @@ fetch(SHEET_URL)
 
 </script>
 
-  <p style="font-size:12px;color:#777;margin:12px 20px">
-  Valores calculados automaticamente com base nas alíquotas vigentes.
-  Última atualização conforme base administrativa.
-</p>
+ 
 
 
 </body>
