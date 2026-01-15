@@ -255,14 +255,36 @@ function getEstadoFromURL() {
   const uf = getEstadoFromURL()?.toUpperCase();
 
   const estados = {
+    AC: 'Acre',
+    AL: 'Alagoas',
+    AP: 'Amapá',
+    AM: 'Amazonas',
+    BA: 'Bahia',
+    CE: 'Ceará',
+    DF: 'Distrito Federal',
+    ES: 'Espírito Santo',
+    GO: 'Goiás',
+    MA: 'Maranhão',
+    MT: 'Mato Grosso',
+    MS: 'Mato Grosso do Sul',
+    MG: 'Minas Gerais',
+    PA: 'Pará',
+    PB: 'Paraíba',
+    PR: 'Paraná',
+    PE: 'Pernambuco',
+    PI: 'Piauí',
+    RJ: 'Rio de Janeiro',
+    RN: 'Rio Grande do Norte',
+    RS: 'Rio Grande do Sul',
+    RO: 'Rondônia',
+    RR: 'Roraima',
+    SC: 'Santa Catarina',
     SPSN: 'São Paulo - Regime Simples',
     SPRN: 'São Paulo - Regime Normal',
-    RJ: 'Rio de Janeiro',
-    MG: 'Minas Gerais',
-    PR: 'Paraná',
-    SC: 'Santa Catarina',
-    RS: 'Rio Grande do Sul'
+    SE: 'Sergipe',
+    TO: 'Tocantins'
   };
+
 
   if (uf && estados[uf]) {
     document.getElementById('titulo-estado').innerText =
