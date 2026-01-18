@@ -154,7 +154,25 @@
   @media (max-width: 768px) {
   .logo-img {
     max-width: 140px; /* tamanho mínimo aceitável no celular */
-  }
+    }
+   /* diminui espaço pra caber */
+  th, td { padding: 8px 6px; font-size: 12px; }
+  table { table-layout: fixed; }
+  .col-produto { width: 34%; }
+  .col-final   { width: 18%; }
+  .col-desc    { width: 18%; }
+  .col-base    { width: 18%; }
+
+  /* esconde colunas menos importantes no celular */
+  .col-codigo
+  /*.col-desc*/ { display: none; }
+
+  /* evita o produto estourar a célula */
+  .col-produto {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    }
   }
 
 
@@ -580,11 +598,11 @@ fetch(SHEET_URL)
       <table>
         <thead>
           <tr>
-            <th>Código</th>
-            <th>Produto</th>
-            <th>Preço base</th>
-            <th>Desc. Máximo</th>
-            <th>Preço final</th>
+            <th class="col-codigo">Código</th>
+            <th class="col-produto">Produto</th>
+            <th class="col-base">Preço base</th>
+            <th class="col-desc">Desc. Máximo</th>
+            <th class="col-final">Preço final</th>
           </tr>
         </thead>
         <tbody>
@@ -612,11 +630,11 @@ fetch(SHEET_URL)
     /* parte que monta a tabela */
   html += `
     <tr>
-      <td class="valor">${row.codigo}</td>
-      <td>${row.produto}</td>
-      <td class="valor">R$ ${precoBase.toFixed(2)}</td>
-      <td class="valor">${row.desconto}%</td>
-      <td class="valor"><strong>R$ ${precoFinal.toFixed(2)}</strong></td>
+      <td class="valor col-codigo">${row.codigo}</td>
+      <td class="col-produto">${row.produto}</td>
+      <td class="valor col-base">R$ ${precoBase.toFixed(2)}</td>
+      <td class="valor col-desc">${row.desconto}%</td>
+      <td class="valor col-final"><strong>R$ ${precoFinal.toFixed(2)}</strong></td>
     </tr>
     `;
   });
