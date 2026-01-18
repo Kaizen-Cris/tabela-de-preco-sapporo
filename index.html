@@ -1,116 +1,47 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Selecione seu estado</title>
-
-<style>
-  body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    font-family: Arial, sans-serif;
-    background: #f5f5f5;
-  }
-
-  .container {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 24px;
-  }
-
-  h1 {
-    margin-bottom: 24px;
-  }
-
-  .estados {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 16px;
-    width: 100%;
-    max-width: 600px;
-  }
-
-  .estado {
-    padding: 16px;
-    background: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 18px;
-
-    display: flex;
-    justify-content: center; /* horizontal */
-    align-items: center;     /* vertical */
-
-    min-height: 40px;        /* 🔥 ESSENCIAL */
-    text-align: center;      /* quebra de linha centralizada */
-}
-
-
-  .estado:hover {
-    background: #111;
-    color: #fff;
-  }
-</style>
+  <meta charset="utf-8">
+  <title>Tabela de Preços</title>
+  <meta name="robots" content="noindex, nofollow">
+  <style>
+    body{
+      margin:0;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-family:Inter, system-ui, Arial;
+      background:#f7f7f7;
+      color:#333;
+    }
+    .box{
+      background:#fff;
+      padding:24px 28px;
+      border-radius:10px;
+      box-shadow:0 8px 24px rgba(0,0,0,.08);
+      max-width:420px;
+      text-align:center;
+    }
+    h1{
+      margin:0 0 10px;
+      font-size:18px;
+      color:#e30915;
+    }
+    p{
+      margin:0;
+      font-size:14px;
+      line-height:1.4;
+    }
+  </style>
 </head>
-
 <body>
-<div class="container">
-  <h1>Selecione seu estado</h1>
-
-  <div class="estados">
-    <div class="estado" onclick="ir('ac')">Acre</div>
-    <div class="estado" onclick="ir('al')">Alagoas</div>
-    <div class="estado" onclick="ir('ap')">Amapá</div>
-    <div class="estado" onclick="ir('am')">Amazonas</div>
-    <div class="estado" onclick="ir('ba')">Bahia</div>
-    <div class="estado" onclick="ir('ce')">Ceará</div>
-    <div class="estado" onclick="ir('df')">Distrito Federal</div>
-    <div class="estado" onclick="ir('es')">Espírito Santo</div>
-    <div class="estado" onclick="ir('go')">Goiás</div>
-    <div class="estado" onclick="ir('ma')">Maranhão</div>
-    <div class="estado" onclick="ir('mt')">Mato Grosso</div>
-    <div class="estado" onclick="ir('ms')">Mato Grosso do Sul</div>
-    <div class="estado" onclick="ir('mg')">Minas Gerais</div>
-    <div class="estado" onclick="ir('pa')">Pará</div>
-    <div class="estado" onclick="ir('pb')">Paraíba</div>
-    <div class="estado" onclick="ir('pr')">Paraná</div>
-    <div class="estado" onclick="ir('pe')">Pernambuco</div>
-    <div class="estado" onclick="ir('pi')">Piauí</div>
-    <div class="estado" onclick="ir('rj')">Rio de Janeiro</div>
-    <div class="estado" onclick="ir('rn')">Rio Grande do Norte</div>
-    <div class="estado" onclick="ir('rs')">Rio Grande do Sul</div>
-    <div class="estado" onclick="ir('ro')">Rondônia</div>
-    <div class="estado" onclick="ir('rr')">Roraima</div>
-    <div class="estado" onclick="ir('sc')">Santa Catarina</div>
-    <div class="estado" onclick="ir('spsn')">São Paulo - Regime Simples</div>
-    <div class="estado" onclick="ir('sprn')">São Paulo - Regime Normal</div>
-    <div class="estado" onclick="ir('se')">Sergipe</div>
-    <div class="estado" onclick="ir('to')">Tocantins</div>
-
-    <div class="estado" onclick="ir('externo')">Informações para Cadastro</div>
+  <div class="box">
+    <h1>Página sem conteúdo público</h1>
+    <p>
+      Esta página não possui informações exibidas.<br>
+      Acesse o link fornecido para visualizar a tabela correta.
+    </p>
   </div>
-
-</div>
-
-<script>
-function ir(destino) {
-
-  // se for site externo
-  if (destino === 'externo') {
-    window.location.href = 'cadastro.html';
-    return;
-  }
-
-  // se for estado normal
-  window.location.href = `tabela.html?uf=${destino}`;
-}
-</script>
 </body>
 </html>
