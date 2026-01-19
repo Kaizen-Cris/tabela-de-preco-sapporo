@@ -253,7 +253,7 @@
         </div>
       </div>
       <div>
-        <h1 id="titulo-estado">Tabela de Preços Varejo</h1>
+        <h1 id="titulo-estado">Tabela de Preços CIF</h1>
       
           <a href="index.html" class="btn-voltar">
           ← Trocar estado
@@ -304,7 +304,7 @@
 
 
 <script>
-const SHEET_URL = "https://opensheet.elk.sh/12Q7WSLM851YBvrNy2BILJnQn_g08uthh-RCCoMKO2T0/VAREJISTA";
+const SHEET_URL = "https://opensheet.elk.sh/12Q7WSLM851YBvrNy2BILJnQn_g08uthh-RCCoMKO2T0/cif";
 
 function getEstadoFromURL() {
     const params = new URLSearchParams(window.location.search);
@@ -347,7 +347,7 @@ function getEstadoFromURL() {
 
   if (uf && estados[uf]) {
     document.getElementById('titulo-estado').innerText =
-      `Tabela de Preços Varejo – ${estados[uf]} (${uf})`;
+      `Tabela de Preços CIF – ${estados[uf]} (${uf})`;
   } else {
   document.getElementById('titulo-estado').innerText =
     'Tabela de Preços';
@@ -602,7 +602,7 @@ function baixarPlanilhaXLSX() {
 
   const wb = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, "Tabela de Preços");
-  XLSX.writeFile(wb, `tabela_precos_varejista_${uf}.xlsx`);
+  XLSX.writeFile(wb, `tabela_precos_cif_${uf}.xlsx`);
 }
 
  /* Função do Botão de Planilha ^ */
@@ -692,3 +692,4 @@ fetch(SHEET_URL)
 </body>
 
 </html>
+
