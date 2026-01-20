@@ -1,412 +1,489 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Tabela de Preços</title>
 
 <style>
   :root{
-      --brand-red: #e30915;
-      --bg-light: #f4f4f4;
-      --white: #ffffff;
-      --black: #000000; 
+    --brand-red:#e30915;
+    --bg:#f4f4f4;
+    --surface:#ffffff;
+    --text:#111827;
+    --muted:#6b7280;
+    --border:#e5e7eb;
+    --shadow:0 10px 28px rgba(17,24,39,.08);
+    --radius:14px;
   }
-  body {
-    margin: 0;
+
+  *{ box-sizing:border-box; }
+
+  body{
+    margin:0;
     font-family: Inter, system-ui, -apple-system, "Helvetica Neue", Arial;
-    color: var(--black);
-  }
-  .topo {
-    background: #ffffff;
-    padding: 16px 24px;
-    align-items: center;
-  }
-  .redes-sociais {
-    float: right;
-    text-align: right;
-    font-size: 17px;
-  }
-  .redes-sociais a {
-  text-decoration: none;
+    background: var(--bg);
+    color: var(--text);
   }
 
+  a{ color: inherit; }
 
-  .icon_left {
-    vertical-align: text-top;
-    margin: 0px 5px 0px 0px;
-  }
-  
-  .icon_right {
-    vertical-align: text-top;
-    margin: 0px 0px 0px 5px;
-  }
-  .logo{
-    background: #ffffff;
-    padding: 16px 24px;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .titulo-estado {
-    margin: 0;
-    font-size: 20px;
-    margin-bottom: 16px;
-    float: left;
-  }
-  .logo-img {
-    max-width: 180px;   /* tamanho padrão desktop */
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-  }
-  h1 {
-    margin-bottom: 16px;
-  }
-  .btn-voltar{
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-
-  padding: 8px 14px;
-  font-size: 14px;
-  font-weight: 600;
-
-  color: #e30915;                 /* vermelho Sapporo */
-  background: #fff;
-  border: 1px solid #e30915;
-  border-radius: 8px;
-
-  text-decoration: none;
-  transition: all .2s ease;
+  .wrap{
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 16px;
   }
 
-  .btn-voltar:hover{
-    background: #e30915;
-    color: #fff;
-    box-shadow: 0 4px 10px rgba(227,9,21,.25);
-    transform: translateY(-1px);
+  .topbar{
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
   }
-
-  .btn-voltar:active{
-    transform: translateY(0);
-    box-shadow: none;
-  }
-  .btn-excel{
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-
-  margin-top: 12px;
-  padding: 9px 16px;
-
-  font-size: 14px;
-  font-weight: 600;
-
-  color: #ffffff;
-  background: #16a34a;               /* verde ação */
-  border: 1px solid #16a34a;
-  border-radius: 8px;
-
-  cursor: pointer;
-  transition: all .2s ease;
-  }
-
-  .btn-excel:hover{
-    background: #15803d;               /* verde mais escuro */
-    border-color: #15803d;
-    box-shadow: 0 6px 14px rgba(22,163,74,.35);
-    transform: translateY(-1px);
-  }
-
-  .btn-excel:active{
-    transform: translateY(0);
-    box-shadow: none;
-  }
-
-  .btn-excel:disabled{
-    opacity: .6;
-    cursor: not-allowed;
-    box-shadow: none;
-  }
-
-
-
-  .subtitulo {
-    margin: 4px 0 0;
+  .topbar-inner{
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 10px 16px;
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:10px;
+    color: var(--muted);
     font-size: 13px;
-    color: var(--black);
   }
-  .sub {
-    margin-left: 15px;
-    margin-bottom: 10px;
-
-
+  .social{
+    display:flex;
+    align-items:center;
+    gap:10px;
   }
-  .loading {
-    padding: 40px;
-    text-align: center;
+  .social a{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:32px;
+    height:32px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background:#fff;
+    text-decoration:none;
+    transition: all .2s ease;
+  }
+  .social a:hover{
+    transform: translateY(-1px);
+    box-shadow: 0 8px 16px rgba(17,24,39,.10);
+  }
+  .social img{
+    width:16px;
+    height:16px;
+    display:block;
+  }
+
+  .header{
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+  .header-inner{
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 14px 16px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+  }
+  .brand{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    min-width: 240px;
+  }
+  .logo-img{
+    width: 160px;
+    max-width: 42vw;
+    height: auto;
+    display:block;
+  }
+  .header-title{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    min-width: 260px;
+  }
+  h1{
+    margin:0;
     font-size: 18px;
+    line-height: 1.2;
+    font-weight: 800;
   }
 
-  
-
-  
-  
-  .info-estado {
-  margin-top: 10px;
-  padding: 10px 14px;
-  background: #f0f4ff;
-  border-left: 4px solid #3b82f6;
-  font-size: 14px;
+  .actions{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-wrap:wrap;
+    justify-content:flex-end;
   }
 
-  .container {
-  width: 100%;
-  padding: 20px;
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding: 9px 14px;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 10px;
+    border: 1px solid transparent;
+    text-decoration:none;
+    cursor:pointer;
+    transition: all .2s ease;
+    user-select:none;
+    white-space:nowrap;
   }
 
-  table {
-    width: 100%;
-    margin-top: 18px;
-    border-collapse: collapse;
-    background: #fff;
+  .btn-outline-red{
+    background:#fff;
+    color: var(--brand-red);
+    border-color: var(--brand-red);
   }
-  /* Linhas alternadas da tabela */
-  tbody tr:nth-child(odd) {
-    background-color: #ffffff;
-  }
-
-  tbody tr:nth-child(even) {
-    background-color: #fdf0f0;
-  }
-  th {
+  .btn-outline-red:hover{
     background: var(--brand-red);
-    font-weight: 600;
-    border-radius: 8px;
-    text-align: center;
-    padding: 10px;   
+    color:#fff;
+    box-shadow: 0 10px 18px rgba(227,9,21,.25);
+    transform: translateY(-1px);
   }
-  
-  td {
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #e0e0e0;
-  }
-  .small{
-    font-size:13px;
-    color:#666
-  }
-  
 
-  /* Congelar cabeçalho da tabela */
-  thead th {
+  .btn-green{
+    background:#16a34a;
+    border-color:#16a34a;
+    color:#fff;
+  }
+  .btn-green:hover{
+    background:#15803d;
+    border-color:#15803d;
+    box-shadow: 0 10px 18px rgba(22,163,74,.28);
+    transform: translateY(-1px);
+  }
+
+  .btn:active{ transform: translateY(0); box-shadow:none; }
+
+  .btn:disabled{
+    opacity:.65;
+    cursor:not-allowed;
+    transform:none;
+    box-shadow:none;
+  }
+
+  .card{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 14px;
+    margin-top: 16px;
+  }
+  .bullets{
+    margin:0;
+    padding:0;
+    list-style:none;
+    display:grid;
+    gap:8px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.35;
+  }
+  .bullets a{
+    color: var(--brand-red);
+    text-decoration: none;
+    font-weight: 700;
+  }
+  .bullets a:hover{ text-decoration: underline; }
+
+  .loading{
+    padding: 30px;
+    text-align:center;
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  /* sem scroll interno */
+  #conteudo{ overflow-x: visible; }
+
+  table{
+    width:100%;
+    border-collapse: separate;
+    border-spacing:0;
+    background: var(--surface);
+  }
+
+  thead th{
     position: sticky;
     top: 0;
-    background-color: #e30915; /* vermelho */
-    color: #ffffff;           /* texto branco */
     z-index: 2;
-  }
-  .valor {
-    text-align: center;
+
+    background: var(--brand-red);
+    color: #fff;
+    font-weight: 800;
+    font-size: 13px;
+    text-align:center;
+    padding: 12px 10px;
+    border-bottom: 1px solid rgba(255,255,255,.20);
+
+    /* arredondamento estável (como você fez) */
+    border-radius: 8px;
   }
 
-  tbody tr:hover {
-  background: #f9fafb;
+  tbody td{
+    padding: 12px 10px;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
   }
 
-  td strong {
-  color: #111827;
+  tbody tr:nth-child(even){ background:#fff; }
+  tbody tr:hover{ background:#fafafa; }
+
+  .valor{ text-align:center; white-space:nowrap; }
+  td strong{ color: var(--text); }
+
+  .col-codigo{
+    text-align:center;
+    white-space:nowrap;
   }
-  
-  @media (max-width: 768px) {
-  .logo-img {
-    max-width: 140px; /* tamanho mínimo aceitável no celular */
-    }
-   /* diminui espaço pra caber */
-  th, td { padding: 8px 6px; font-size: 12px; }
-  table { table-layout: fixed; }
-  .col-produto { width: 34%; }
-  .col-final   { width: 18%; }
-  .col-desc    { width: 18%; }
-  .col-base    { width: 18%; }
 
-  /* esconde colunas menos importantes no celular */
-  .col-codigo
-  /*.col-desc*/ { display: none; }
-
-  .col-produto {
+  .col-produto{
     white-space: normal;
     word-break: break-word;
     overflow-wrap: anywhere;
-    line-height: 1.2;
+    line-height: 1.25;
+  }
+
+  .footer-note{
+    display:flex;
+    gap:10px;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 12px;
+    padding: 0 2px;
+  }
+
+  @media (max-width: 768px){
+    .header-inner{
+      align-items:flex-start;
+      flex-direction:column;
     }
-  .btn-excel{
-    font-size: 13px;
-    padding: 8px 14px;
-  }
+    .actions{ width:100%; justify-content:flex-start; }
+    .logo-img{ width: 140px; }
+    h1{ font-size: 16px; }
+
+    tbody td{ font-size: 13px; padding: 10px 8px; }
+    thead th{ font-size: 12px; padding: 10px 8px; }
+
+    .col-codigo{ display:none; }
   }
 
+  /* =========================
+   TOOLTIP DE IMAGEM (PRODUTO)
+   ========================= */
 
+.prod-tooltip{
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none; /* remove sublinhado */
+  transition: color .15s ease;
+}
+
+.prod-tooltip:hover{
+  color: var(--brand-red); /* feedback visual clean */
+}
+
+.prod-tooltip:focus{
+  outline: none;
+}
+
+.prod-tooltip:focus-visible{
+  outline: 2px solid rgba(227,9,21,.35);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.tooltip-img{
+  position: absolute;
+  left: 0;
+  top: 120%;
+  width: 240px;
+  max-width: min(72vw, 240px);
+  background: #fff;
+  border: 1px solid rgba(17,24,39,.12);
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 14px 32px rgba(17,24,39,.14);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: .15s ease;
+  z-index: 9999;
+  pointer-events: none; /* evita tremida */
+}
+
+.tooltip-img img{
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 10px;
+}
+
+.tooltip-img .tooltip-caption{
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.2;
+}
+
+.prod-tooltip:hover .tooltip-img,
+.prod-tooltip:focus .tooltip-img{
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
 
 </style>
 </head>
 
 <body>
-  <div class="topo">
-    <div class="redes-sociais">
-      Sapporo nas redes sociais
-      <a href="https://www.facebook.com/sapporoalimentos/?locale=pt_BR" target="_blank">
-        <img class="icon_left" src="../assets/img/facebook.svg" width="17" height="17">
-      </a>
-      <a href="https://www.instagram.com/sapporooficial/" target="_blank">
-        <img class="icon_right" src="../assets/img/instagram.svg" width="17" height="17">
-      </a>
-    </div>
-    <header>
-      <div id="logo">
-        <div id="picture">
-        <img src="../assets/img/sapporo.png" 
-        alt="Sapporo" 
-        class="logo-img"> 
-        </div>
-      </div>
-      <div>
-        <h1 id="titulo-estado">Tabela de Preços Distribuidor</h1>
-      
-          <a href="index.html" class="btn-voltar">
-          ← Trocar estado
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <span>Sapporo nas redes sociais</span>
+      <div class="social">
+        <a href="https://www.facebook.com/sapporoalimentos/?locale=pt_BR" target="_blank" rel="noopener">
+          <img src="../assets/img/facebook.svg" alt="Facebook">
+        </a>
+        <a href="https://www.instagram.com/sapporooficial/" target="_blank" rel="noopener">
+          <img src="../assets/img/instagram.svg" alt="Instagram">
         </a>
       </div>
-
-      <button id="btn-exportar" class="btn-excel">
-        ⬇️ Baixar planilha Excel
-      </button>
-
-    
-    </header>
-  </div>
-  <div class="sub">
-    <p>Valores calculados automaticamente conforme o estado</p>
-    <b>•</b>
-    Informações dos produtos para cadastro
-    <a href='../cadastro.html' target="_blank">aqui</a>
-    <br>
-    <b>•</b>
-    Compras sem valor mínimo somente na
-    <a href="https://loja.sapporo.com.br">Loja online</a>
-    <br>
-    <b>•</b>
-    Caso queira mais Informações falar com
-    <a href="https://api.whatsapp.com/send?phone=5511947922506&text=Quero%20mais%20informações%20%28Site%20Sapporo%29" target="_blank">Ana</a>
-    ou a 
-    <a href="https://api.whatsapp.com/send?phone=5511947903094&text=Quero%20mais%20informações%20%28Site%20Sapporo%29" target="_blank">Alexandra</a>
-    <br>
-  </div>
-  
-    
-  
-  
-      <div id="conteudo" class="loading">
-      Carregando dados…
     </div>
-    <div style="margin:14px 20px;display:flex;justify-content:space-between;align-items:center">
-      <div class="small">Valores calculados automaticamente com base nas alíquotas vigentes.Última atualização conforme base administrativa.</div>
-      <div class="small">Observação: o cálculo aplica ICMS + IVA diretamente sobre o preço base.</div>
+  </div>
+
+  <div class="header">
+    <div class="header-inner">
+      <div class="brand">
+        <img src="../assets/img/sapporo.png" alt="Sapporo" class="logo-img">
+      </div>
+
+      <div class="header-title">
+        <h1 id="titulo-estado">Tabela de Preços Distribuidor</h1>
+      </div>
+
+      <div class="actions">
+        <a href="index.html" class="btn btn-outline-red">← Trocar estado</a>
+        <button id="btn-exportar" class="btn btn-green">⬇️ Baixar planilha Excel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <div class="card">
+      <ul class="bullets">
+        <li><b>•</b> Valores calculados automaticamente conforme a tributação do estado.</li>
+        <li><b>•</b> Para cadastro dos produtos, <strong>baixe a planilha</strong>, que já contém todas as informações necessárias.</li>
+        <li><b>•</b> Compras sem valor mínimo somente na <a href="https://loja.sapporo.com.br" target="_blank" rel="noopener">Loja online</a>.</li>
+        <li><b>•</b> O desconto máximo permitido é de <strong>até 20%</strong>, conforme negociação comercial.</li>
+        <li><b>•</b> Dúvidas: fale com
+          <a href="https://api.whatsapp.com/send?phone=5511947922506&text=Quero%20mais%20informações%20%28Site%20Sapporo%29" target="_blank" rel="noopener">Ana</a>
+          ou
+          <a href="https://api.whatsapp.com/send?phone=5511947903094&text=Quero%20mais%20informações%20%28Site%20Sapporo%29" target="_blank" rel="noopener">Alexandra</a>.
+        </li>
+      </ul>
     </div>
 
+    <div id="conteudo" class="card loading">Carregando dados…</div>
 
+    <div class="footer-note">
+      <div>Valores calculados automaticamente com base nas alíquotas vigentes. Última atualização conforme base administrativa.</div>
+      <div>Observação: o cálculo aplica ICMS + IVA diretamente sobre o preço base.</div>
+    </div>
 
-  
-<script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
+  </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
 
 <script>
 const SHEET_URL = "https://opensheet.elk.sh/12Q7WSLM851YBvrNy2BILJnQn_g08uthh-RCCoMKO2T0/DISTRIBUIDOR";
 
 function getEstadoFromURL() {
-    const params = new URLSearchParams(window.location.search);
-    return params.get('uf');
-  }
-  
-  const uf = getEstadoFromURL()?.toUpperCase();
+  const params = new URLSearchParams(window.location.search);
+  return params.get('uf');
+}
 
-  const estados = {
-    AC: 'Acre',
-    AL: 'Alagoas',
-    AP: 'Amapá',
-    AM: 'Amazonas',
-    BA: 'Bahia',
-    CE: 'Ceará',
-    DF: 'Distrito Federal',
-    ES: 'Espírito Santo',
-    GO: 'Goiás',
-    MA: 'Maranhão',
-    MT: 'Mato Grosso',
-    MS: 'Mato Grosso do Sul',
-    MG: 'Minas Gerais',
-    PA: 'Pará',
-    PB: 'Paraíba',
-    PR: 'Paraná',
-    PE: 'Pernambuco',
-    PI: 'Piauí',
-    RJ: 'Rio de Janeiro',
-    RN: 'Rio Grande do Norte',
-    RS: 'Rio Grande do Sul',
-    RO: 'Rondônia',
-    RR: 'Roraima',
-    SC: 'Santa Catarina',
-    SPSN: 'São Paulo - Regime Simples',
-    SPRN: 'São Paulo - Regime Normal',
-    SE: 'Sergipe',
-    TO: 'Tocantins'
-  };
+const uf = getEstadoFromURL()?.toUpperCase();
 
+const estados = {
+  AC: 'Acre', AL: 'Alagoas', AP: 'Amapá', AM: 'Amazonas', BA: 'Bahia', CE: 'Ceará', DF: 'Distrito Federal',
+  ES: 'Espírito Santo', GO: 'Goiás', MA: 'Maranhão', MT: 'Mato Grosso', MS: 'Mato Grosso do Sul', MG: 'Minas Gerais',
+  PA: 'Pará', PB: 'Paraíba', PR: 'Paraná', PE: 'Pernambuco', PI: 'Piauí', RJ: 'Rio de Janeiro', RN: 'Rio Grande do Norte',
+  RS: 'Rio Grande do Sul', RO: 'Rondônia', RR: 'Roraima', SC: 'Santa Catarina', SPSN: 'São Paulo - Regime Simples',
+  SPRN: 'São Paulo - Regime Normal', SE: 'Sergipe', TO: 'Tocantins'
+};
 
-  if (uf && estados[uf]) {
-    document.getElementById('titulo-estado').innerText =
-      `Tabela de Preços Distribuidor – ${estados[uf]} (${uf})`;
-  } else {
+if (uf && estados[uf]) {
   document.getElementById('titulo-estado').innerText =
-    'Tabela de Preços';
-  
+    `Tabela de Preços Distribuidor – ${estados[uf]} (${uf})`;
+} else {
+  document.getElementById('titulo-estado').innerText = 'Tabela de Preços';
+
   document.getElementById('conteudo').innerHTML = `
-    <div style="padding:30px;text-align:center">
-      <p style="font-size:16px">
+    <div style="padding:18px;text-align:center">
+      <p style="font-size:14px;color:var(--muted);margin:0 0 10px">
         Selecione um estado para visualizar a tabela de preços.
       </p>
-      <a href="index.html" style="
-        display:inline-block;
-        margin-top:12px;
-        color:#2563eb;
-        text-decoration:none;
-        font-weight:bold;
-      ">
+      <a href="index.html" class="btn btn-outline-red" style="justify-content:center">
         Selecionar estado
       </a>
     </div>
   `;
 }
 
-  
+/* ================================
+   TOOLTIP: como obter o link da foto
+   ================================
+   1) Se sua planilha já tiver uma coluna com URL da imagem, use aqui.
+      Exemplos comuns: row.imagem_url, row.imagem, row.foto, row.linkimagem...
+      Ajuste a lista de candidatos abaixo.
+*/
+function getImagemUrl(row){
+  const candidatos = [
+    row.imagem_url,
+    row.imagem,
+    row.foto,
+    row.linkimagem,
+    row.url_imagem
+  ].filter(Boolean);
 
+  if (candidatos.length) return String(candidatos[0]).trim();
+  return "";
+}
+
+function escapeHtml(str){
+  return String(str ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+/* ⚠️ Mantido: cálculo COM desconto (não mexi na lógica) */
 function calcularPreco(precoBase, desconto, aliqInter, iva, aliqDest) {
-  // garante que o desconto esteja em decimal
   const descontoDecimal = desconto <= 1 ? desconto : desconto / 100;
-
-  // 1️⃣ aplica desconto no preço base
   const precoComDesconto = precoBase - (precoBase * descontoDecimal);
-
-  // 2️⃣ cálculos dos valores
   const valor1 = (precoComDesconto + (precoComDesconto * iva)) * aliqDest;
   const valor2 = precoComDesconto * aliqInter;
-
-  // 3️⃣ resultado final
   return precoComDesconto + (valor1 - valor2);
 }
 
-
-    /* Função do Botão de Planilha v */
+/* ======= EXPORTAÇÃO XLSX (mantida) ======= */
 function baixarPlanilhaXLSX() {
   if (!uf || dadosGlobais.length === 0) {
     alert("Selecione um estado válido.");
@@ -416,7 +493,6 @@ function baixarPlanilhaXLSX() {
   const ufSheet = uf.toLowerCase();
   const nomeEstado = estados[uf] || uf;
 
-  // Data + hora (sem segundos)
   const agora = new Date();
   const dataHora =
     agora.toLocaleDateString("pt-BR") +
@@ -425,13 +501,11 @@ function baixarPlanilhaXLSX() {
 
   const linhas = [];
 
-  // Cabeçalho visual (3 linhas + 1 em branco)
   linhas.push([`Tabela de Preços Distribuidor – ${nomeEstado} (${uf})`]);
   linhas.push(["Valores calculados automaticamente conforme o estado"]);
   linhas.push([`Gerado em: ${dataHora}`]);
   linhas.push([]);
 
-  // Cabeçalho da tabela (linha 4)
   linhas.push([
     "Produto",
     "EAN (Cód. de Barras)",
@@ -448,24 +522,20 @@ function baixarPlanilhaXLSX() {
     "Validade (dias)",
   ]);
 
-  // Dados
   dadosGlobais.forEach((row) => {
     const precoBase = parseFloat(row.precobase);
     const aliqInter = parseFloat(row[`aliqinter_${ufSheet}`]) / 100;
     const iva = parseFloat(row[`iva_${ufSheet}`]) / 100;
     const aliqDest = parseFloat(row[`aliqdest_${ufSheet}`]) / 100;
-    const desconto = parseFloat(row.desconto) / 100; // ex: 18 ou 0.18
-    
+    const desconto = parseFloat(row.desconto) / 100;
+
     if (isNaN(precoBase) || isNaN(desconto) || isNaN(aliqInter) || isNaN(iva) || isNaN(aliqDest)) return;
 
     const precoFinal = calcularPreco(precoBase, desconto, aliqInter, iva, aliqDest);
 
-
-    // Números com 2 casas (mantém valor numérico p/ formato)
     const precoBaseNum = Number(precoBase.toFixed(2));
     const precoFinalNum = Number(precoFinal.toFixed(2));
 
-    // EAN/DUN como texto (preserva zeros à esquerda)
     const eanTxt = row.ean ? String(row.ean) : "";
     const dunTxt = row.dun ? String(row.dun) : "";
 
@@ -476,9 +546,9 @@ function baixarPlanilhaXLSX() {
       desconto,
       row.ncm || "",
       row.cest || "",
-      aliqInter,     // percentual como fração (0.12) → Excel formata como %
-      iva,           // idem
-      aliqDest,      // idem (você chamou de ST no cabeçalho)
+      aliqInter,
+      iva,
+      aliqDest,
       precoFinalNum,
       row.quantd_caixa ?? "",
       dunTxt,
@@ -488,7 +558,6 @@ function baixarPlanilhaXLSX() {
 
   const ws = XLSX.utils.aoa_to_sheet(linhas);
 
-  // --- Mesclas do cabeçalho (A até L) ---
   ws["!merges"] = [
     { s: { r: 0, c: 0 }, e: { r: 0, c: 12 } },
     { s: { r: 1, c: 0 }, e: { r: 1, c: 12 } },
@@ -496,24 +565,11 @@ function baixarPlanilhaXLSX() {
     { s: { r: 3, c: 0 }, e: { r: 3, c: 12 } },
   ];
 
-  // --- Larguras ---
   ws["!cols"] = [
-    { wch: 54 }, // Produto
-    { wch: 18 }, // EAN
-    { wch: 14 }, // Preço Base
-    { wch: 10 }, // Desconto
-    { wch: 18 }, // NCM
-    { wch: 12 }, // CEST
-    { wch: 12 }, // Aliq Inter
-    { wch: 10 }, // IVA
-    { wch: 10 }, // ST
-    { wch: 14 }, // Preço Final
-    { wch: 10 }, // Qtd/Caixa
-    { wch: 18 }, // DUN
-    { wch: 12 }, // Validade
+    { wch: 54 }, { wch: 18 }, { wch: 14 }, { wch: 10 }, { wch: 18 }, { wch: 12 },
+    { wch: 12 }, { wch: 10 }, { wch: 10 }, { wch: 14 }, { wch: 10 }, { wch: 18 }, { wch: 12 },
   ];
 
-  // --- Estilos (xlsx-js-style) ---
   const headerBg = "E30915";
   const grid = "D1D5DB";
   const dark = "111827";
@@ -527,45 +583,34 @@ function baixarPlanilhaXLSX() {
     right: { style: "thin", color: { rgb: grid } },
   };
 
-  // Helper p/ aplicar estilo sem apagar
   function setStyle(addr, patch) {
-  if (!ws[addr]) return;
-
-  ws[addr].s = ws[addr].s || {};
-
-  ws[addr].s = {
-    ...ws[addr].s,
-    ...patch,
-    font: { ...(ws[addr].s.font || {}), ...(patch.font || {}) },
-    alignment: { ...(ws[addr].s.alignment || {}), ...(patch.alignment || {}) },
-    fill:
-      patch.fill !== undefined
-        ? patch.fill
-        : ws[addr].s.fill,
-    border: patch.border || ws[addr].s.border,
+    if (!ws[addr]) return;
+    ws[addr].s = ws[addr].s || {};
+    ws[addr].s = {
+      ...ws[addr].s,
+      ...patch,
+      font: { ...(ws[addr].s.font || {}), ...(patch.font || {}) },
+      alignment: { ...(ws[addr].s.alignment || {}), ...(patch.alignment || {}) },
+      fill: patch.fill !== undefined ? patch.fill : ws[addr].s.fill,
+      border: patch.border || ws[addr].s.border,
     };
   }
 
-
-  // Título (r=0,c=0)
   setStyle(XLSX.utils.encode_cell({ r: 0, c: 0 }), {
     font: { bold: true, sz: 16, color: { rgb: dark } },
     alignment: { horizontal: "center", vertical: "center" },
   });
 
-  // Subtítulo (r=1,c=0)
   setStyle(XLSX.utils.encode_cell({ r: 1, c: 0 }), {
     font: { sz: 11, color: { rgb: muted } },
     alignment: { horizontal: "center", vertical: "center" },
   });
 
-  // Data/hora (r=2,c=0)
   setStyle(XLSX.utils.encode_cell({ r: 2, c: 0 }), {
     font: { sz: 10, italic: true, color: { rgb: muted2 } },
     alignment: { horizontal: "center", vertical: "center" },
   });
 
-  // Cabeçalho da tabela (linha 4)
   const headerRow = 4;
   for (let C = 0; C <= 12; C++) {
     const addr = XLSX.utils.encode_cell({ r: headerRow, c: C });
@@ -577,53 +622,35 @@ function baixarPlanilhaXLSX() {
     });
   }
 
-  // Range completo
   const range = XLSX.utils.decode_range(ws["!ref"]);
 
-  // Formatos
-  // Preço Base (col 2) e Preço Final (col 9)
-  // Percentuais (cols 3, 6, 7, 8)
   for (let R = 5; R <= range.e.r; R++) {
-    // Moeda
     const cBase = XLSX.utils.encode_cell({ r: R, c: 2 });
     if (ws[cBase]) ws[cBase].z = '"R$" #,##0.00';
 
     const cFinal = XLSX.utils.encode_cell({ r: R, c: 9 });
     if (ws[cFinal]) ws[cFinal].z = '"R$" #,##0.00';
 
-    // Percentuais (como fração)
     for (const C of [3, 6, 7, 8]) {
       const addr = XLSX.utils.encode_cell({ r: R, c: C });
       if (ws[addr]) ws[addr].z = "0.00%";
     }
   }
 
-  // Alinhamentos por coluna + bordas em todas as células preenchidas
   for (let R = range.s.r; R <= range.e.r; R++) {
     for (let C = range.s.c; C <= range.e.c; C++) {
       const addr = XLSX.utils.encode_cell({ r: R, c: C });
       if (!ws[addr]) continue;
 
-      // Bordas gerais
       ws[addr].s = ws[addr].s || {};
       ws[addr].s.border = ws[addr].s.border || borderThin;
 
-      // Não mexe nas 4 primeiras linhas (título/sub/data/vazio), só borda se existir
       if (R < 4) continue;
-
-      // Linha do cabeçalho já foi definida acima
       if (R === 4) continue;
 
-      // Dados (R >= 5)
       let horizontal = "left";
-
-      // Produto, EAN, DUN → esquerda
       if ([0, 1, 11].includes(C)) horizontal = "left";
-
-      // NCM/CEST → centro
       if ([4, 5].includes(C)) horizontal = "center";
-
-      // Numéricos → direita
       if ([2, 3, 6, 7, 8, 9, 10, 12].includes(C)) horizontal = "right";
 
       setStyle(addr, {
@@ -637,93 +664,98 @@ function baixarPlanilhaXLSX() {
   XLSX.utils.book_append_sheet(wb, ws, "Tabela de Preços");
   XLSX.writeFile(wb, `tabela_precos_distribuidor_${uf}.xlsx`);
 }
+/* ======= FIM EXPORTAÇÃO ======= */
 
- /* Função do Botão de Planilha ^ */
+const conteudo = document.getElementById("conteudo");
+conteudo.classList.add("loading");
 
-  const conteudo = document.getElementById("conteudo");
-    conteudo.classList.add("loading");
+let dadosGlobais = [];
 
-  let dadosGlobais = [];
+if (uf && estados[uf]) {
+  fetch(SHEET_URL)
+    .then(res => res.json())
+    .then(dados => {
+      dadosGlobais = dados;
 
+      let html = `
+        <table>
+          <thead>
+            <tr>
+              <th class="col-codigo">Código</th>
+              <th class="col-produto">Produto</th>
+              <th class="col-base">Preço base</th>
+              <th class="col-desc">Desc. Máximo</th>
+              <th class="col-final">Preço final</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
 
+      const ufSheet = uf.toLowerCase();
+      let linhasRenderizadas = 0;
 
-fetch(SHEET_URL)
-  .then(res => res.json())
-  .then(dados => {
-    dadosGlobais = dados;
-    
+      dados.forEach(row => {
+        const precoBase = parseFloat(row.precobase);
 
-    let html = `
-      <table>
-        <thead>
+        const aliqInter = parseFloat(row[`aliqinter_${ufSheet}`]) / 100;
+        const iva       = parseFloat(row[`iva_${ufSheet}`]) / 100;
+        const aliqDest  = parseFloat(row[`aliqdest_${ufSheet}`]) / 100;
+
+        const desconto = parseFloat(row.desconto) / 100;
+
+        if (isNaN(precoBase) || isNaN(desconto) || isNaN(aliqInter) || isNaN(iva) || isNaN(aliqDest)) return;
+
+        linhasRenderizadas++;
+
+        const precoFinal = calcularPreco(precoBase, desconto, aliqInter, iva, aliqDest);
+
+        const nomeProduto = row.produto ?? "";
+        const imgUrl = getImagemUrl(row);
+
+        const produtoHtml = imgUrl
+          ? `
+            <span class="prod-tooltip" tabindex="0" aria-label="Ver foto do produto">
+              ${escapeHtml(nomeProduto)}
+              <span class="tooltip-img" role="tooltip">
+                <img src="${escapeHtml(imgUrl)}" alt="${escapeHtml(nomeProduto)}" loading="lazy" />
+                <div class="tooltip-caption">Foto do produto</div>
+              </span>
+            </span>
+          `
+          : escapeHtml(nomeProduto);
+
+        html += `
           <tr>
-            <th class="col-codigo">Código</th>
-            <th class="col-produto">Produto</th>
-            <th class="col-base">Preço base</th>
-            <th class="col-desc">Desc. Máximo</th>
-            <th class="col-final">Preço final</th>
+            <td class="valor col-codigo">${escapeHtml(row.codigo ?? "")}</td>
+            <td class="col-produto">${produtoHtml}</td>
+            <td class="valor col-base">R$ ${precoBase.toFixed(2)}</td>
+            <td class="valor col-desc">${escapeHtml(row.desconto ?? "")}%</td>
+            <td class="valor col-final"><strong>R$ ${precoFinal.toFixed(2)}</strong></td>
           </tr>
-        </thead>
-        <tbody>
-    `;
+        `;
+      });
 
-    const ufSheet = uf.toLowerCase();       
-    console.log("UF:", uf);
-    console.log("Primeira linha:", dados[0]);        
+      if (linhasRenderizadas === 0) {
+        conteudo.classList.remove("loading");
+        conteudo.innerHTML = "Nenhum produto disponível para este estado.";
+        return;
+      }
 
-    let linhasRenderizadas = 0;
-
-  dados.forEach(row => {
-    const precoBase = parseFloat(row.precobase);
-
-    const aliqInter = parseFloat(row[`aliqinter_${ufSheet}`]) / 100;
-    const iva       = parseFloat(row[`iva_${ufSheet}`]) / 100;
-    const aliqDest  = parseFloat(row[`aliqdest_${ufSheet}`]) / 100;
-    const desconto = parseFloat(row.desconto) / 100;
-    
-    if (isNaN(precoBase) || isNaN(desconto) || isNaN(aliqInter) || isNaN(iva) || isNaN(aliqDest)) return;
-
-    linhasRenderizadas++;
-
-    const precoFinal = calcularPreco(precoBase, desconto, aliqInter, iva, aliqDest);
-    /* parte que monta a tabela */
-  html += `
-    <tr>
-      <td class="valor col-codigo">${row.codigo}</td>
-      <td class="col-produto">${row.produto}</td>
-      <td class="valor col-base">R$ ${precoBase.toFixed(2)}</td>
-      <td class="valor col-desc">${row.desconto}%</td>
-      <td class="valor col-final"><strong>R$ ${precoFinal.toFixed(2)}</strong></td>
-    </tr>
-    `;
-  });
-
-  if (linhasRenderizadas === 0) {
-  document.getElementById("conteudo").innerHTML =
-    "Nenhum produto disponível para este estado.";
-  return;
-}
-
-
-    html += "</tbody></table>";
+      html += "</tbody></table>";
       conteudo.classList.remove("loading");
       conteudo.innerHTML = html;
-  })
-  .catch(err => {
-    document.getElementById("conteudo").innerText =
-      "Erro ao carregar dados da planilha.";
-    console.error(err);
-  });
+    })
+    .catch(err => {
+      conteudo.innerText = "Erro ao carregar dados da planilha.";
+      console.error(err);
+    });
+} else {
+  conteudo.classList.remove("loading");
+}
 
-  document.getElementById("btn-exportar")
+document.getElementById("btn-exportar")
   ?.addEventListener("click", baixarPlanilhaXLSX);
-
-
-
 </script>
-
- 
-
 
 </body>
 </html>
