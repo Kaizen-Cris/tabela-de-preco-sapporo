@@ -161,26 +161,6 @@
     border-color: rgba(227,9,21,.35);
   }
 
-  .estado.is-cadastro{
-    background: rgba(227,9,21,.06);
-    border-color: rgba(227,9,21,.35);
-    color: var(--brand-red);
-  }
-
-  .estado.is-cadastro:hover{
-    background: var(--brand-red);
-    color:#fff;
-    border-color: var(--brand-red);
-    box-shadow: 0 12px 22px rgba(227,9,21,.22);
-  }
-
-  .footer-note{
-    margin-top: 10px;
-    color: var(--muted);
-    font-size: 12px;
-    padding: 0 2px;
-  }
-
   @media (max-width: 768px){
     .logo-img{ width: 140px; }
     .estados{ grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
@@ -249,7 +229,6 @@
         <div class="estado" onclick="ir('se')">Sergipe</div>
         <div class="estado" onclick="ir('to')">Tocantins</div>
 
-        <div class="estado is-cadastro" onclick="ir('externo')">Informações para Cadastro</div>
       </div>
 
     </div>
@@ -257,10 +236,6 @@
 
 <script>
 function ir(destino) {
-  if (destino === 'externo') {
-    window.location.href = '../cadastro.html';
-    return;
-  }
   window.location.href = `tabela.html?uf=${destino}`;
 }
 </script>
