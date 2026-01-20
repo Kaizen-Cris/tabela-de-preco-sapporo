@@ -203,7 +203,7 @@
     font-weight: 600;
   }
 
-  /* mantém a tabela do jeito do código da memória e evita “estouro” no mobile */
+  /* sem scroll interno */
   #conteudo{
     overflow-x: visible;
   }
@@ -215,11 +215,19 @@
     background: var(--surface);
   }
 
+  /* ✅ Cabeçalho arredondado e “cortado” de forma estável */
+  thead tr{
+    background: var(--brand-red);
+    
+    overflow: hidden;
+  }
+
   thead th{
     position: sticky;
     top: 0;
     z-index: 2;
-    background: var(--brand-red);
+    border-radius: 8px;
+    background: transparent; /* ✅ importante */
     color: #fff;
     font-weight: 800;
     font-size: 13px;
@@ -227,8 +235,6 @@
     padding: 12px 10px;
     border-bottom: 1px solid rgba(255,255,255,.20);
   }
-  thead th:first-child{ border-top-left-radius: 12px; }
-  thead th:last-child{ border-top-right-radius: 12px; }
 
   tbody td{
     padding: 12px 10px;
@@ -239,11 +245,11 @@
   tbody tr:nth-child(even){ background:#fff; }
   tbody tr:hover{ background:#fafafa; }
 
-  .valor{ text-align:right; white-space:nowrap; }
+  .valor{ text-align:center; white-space:nowrap; }
   td strong{ color: var(--text); }
 
-  .col-codigo {
-    text-align:right;
+  .col-codigo{
+    text-align:center;
     white-space:nowrap;
   }
 
@@ -276,8 +282,9 @@
 
     tbody td{ font-size: 13px; padding: 10px 8px; }
     thead th{ font-size: 12px; padding: 10px 8px; }
-    .col-codigo {
-      display: none;
+
+    .col-codigo{
+      display:none;
     }
   }
 
@@ -293,9 +300,7 @@
     text-decoration-thickness: 2px;
   }
 
-  .prod-tooltip:focus{
-    outline: none;
-  }
+  .prod-tooltip:focus{ outline: none; }
 
   .prod-tooltip:focus-visible{
     outline: 2px solid rgba(227,9,21,.35);
@@ -319,7 +324,7 @@
     transform: translateY(-6px);
     transition: .15s ease;
     z-index: 9999;
-    pointer-events: none; /* evita "tremer" no hover */
+    pointer-events: none;
   }
 
   .tooltip-img img{
@@ -343,6 +348,7 @@
     transform: translateY(0);
   }
 </style>
+
 </head>
 
 <body>
@@ -383,7 +389,7 @@
     <div class="card">
       <ul class="bullets">
         <li><b>•</b> Valores calculados automaticamente conforme a tributação do estado.</li>
-        <li><b>•</b> Informações dos produtos para cadastro <a href="../cadastro.html" target="_blank" rel="noopener">aqui</a>.</li>
+        <li><b>•</b> Para cadastro dos produtos, <strong>baixe a planilha</strong>, que já contém todas as informações necessárias.</li>
         <li><b>•</b> Compras sem valor mínimo somente na <a href="https://loja.sapporo.com.br" target="_blank" rel="noopener">Loja online</a>.</li>
         <li><b>•</b> Dúvidas: fale com
           <a href="https://api.whatsapp.com/send?phone=5511947922506&text=Quero%20mais%20informações%20%28Site%20Sapporo%29" target="_blank" rel="noopener">Ana</a>
