@@ -289,64 +289,71 @@
   }
 
   /* =========================
-     TOOLTIP DE IMAGEM (PRODUTO)
-     ========================= */
-  .prod-tooltip{
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-    text-decoration: underline;
-    text-underline-offset: 3px;
-    text-decoration-thickness: 2px;
-  }
+   TOOLTIP DE IMAGEM (PRODUTO)
+   ========================= */
 
-  .prod-tooltip:focus{ outline: none; }
+.prod-tooltip{
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none; /* remove sublinhado */
+  transition: color .15s ease;
+}
 
-  .prod-tooltip:focus-visible{
-    outline: 2px solid rgba(227,9,21,.35);
-    outline-offset: 3px;
-    border-radius: 8px;
-  }
+.prod-tooltip:hover{
+  color: var(--brand-red); /* feedback visual clean */
+}
 
-  .tooltip-img{
-    position: absolute;
-    left: 0;
-    top: 120%;
-    width: 240px;
-    max-width: min(72vw, 240px);
-    background: #fff;
-    border: 1px solid rgba(17,24,39,.12);
-    border-radius: 12px;
-    padding: 10px;
-    box-shadow: 0 14px 32px rgba(17,24,39,.14);
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-6px);
-    transition: .15s ease;
-    z-index: 9999;
-    pointer-events: none;
-  }
+.prod-tooltip:focus{
+  outline: none;
+}
 
-  .tooltip-img img{
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 10px;
-  }
+.prod-tooltip:focus-visible{
+  outline: 2px solid rgba(227,9,21,.35);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
 
-  .tooltip-img .tooltip-caption{
-    margin-top: 8px;
-    font-size: 12px;
-    color: var(--muted);
-    line-height: 1.2;
-  }
+.tooltip-img{
+  position: absolute;
+  left: 0;
+  top: 120%;
+  width: 240px;
+  max-width: min(72vw, 240px);
+  background: #fff;
+  border: 1px solid rgba(17,24,39,.12);
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 14px 32px rgba(17,24,39,.14);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: .15s ease;
+  z-index: 9999;
+  pointer-events: none; /* evita tremida */
+}
 
-  .prod-tooltip:hover .tooltip-img,
-  .prod-tooltip:focus .tooltip-img{
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-  }
+.tooltip-img img{
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 10px;
+}
+
+.tooltip-img .tooltip-caption{
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--muted);
+  line-height: 1.2;
+}
+
+.prod-tooltip:hover .tooltip-img,
+.prod-tooltip:focus .tooltip-img{
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
 </style>
 
 </head>
