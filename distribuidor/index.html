@@ -6,111 +6,264 @@
 <title>Selecione seu estado</title>
 
 <style>
-  body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 100%;
-    font-family: Arial, sans-serif;
-    background: #f5f5f5;
+  :root{
+    --brand-red:#e30915;
+    --bg:#f4f4f4;              /* fundo tipo loja */
+    --surface:#ffffff;         /* card branco */
+    --text:#111827;
+    --muted:#6b7280;
+    --border:#e5e7eb;
+    --shadow:0 10px 28px rgba(17,24,39,.08);
+    --radius:14px;
   }
 
-  .container {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 24px;
+  *{ box-sizing:border-box; }
+
+  body{
+    margin:0;
+    font-family: Inter, system-ui, -apple-system, "Helvetica Neue", Arial;
+    background: var(--bg);
+    color: var(--text);
   }
 
-  h1 {
-    margin-bottom: 24px;
+  /* Topbar (opcional, mas combina com suas páginas) */
+  .topbar{
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+  .topbar-inner{
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 10px 16px;
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:10px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  .social{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .social a{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:32px;
+    height:32px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background:#fff;
+    text-decoration:none;
+    transition: all .2s ease;
+  }
+  .social a:hover{
+    transform: translateY(-1px);
+    box-shadow: 0 8px 16px rgba(17,24,39,.10);
+  }
+  .social img{
+    width:16px;
+    height:16px;
+    display:block;
   }
 
-  .estados {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 16px;
-    width: 100%;
-    max-width: 600px;
+  /* Header com logo */
+  .header{
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+  }
+  .header-inner{
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 14px 16px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .logo-img{
+    width: 160px;
+    max-width: 45vw;
+    height:auto;
+    display:block;
   }
 
-  .estado {
+  .wrap{
+    max-width: 1100px;
+    margin: 0 auto;
     padding: 16px;
-    background: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    cursor: pointer;
+  }
+
+  .card{
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 16px;
+  }
+
+  h1{
+    margin: 0 0 6px;
     font-size: 18px;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+  .subtitle{
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.35;
+  }
 
-    display: flex;
-    justify-content: center; /* horizontal */
-    align-items: center;     /* vertical */
+  .estados{
+    margin-top: 14px;
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+  }
 
-    min-height: 40px;        /* 🔥 ESSENCIAL */
-    text-align: center;      /* quebra de linha centralizada */
-}
+  .estado{
+    padding: 14px 12px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
 
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    min-height: 46px;
 
-  .estado:hover {
-    background: #111;
-    color: #fff;
+    transition: all .18s ease;
+    user-select:none;
+  }
+
+  .estado:hover{
+    border-color: rgba(227,9,21,.45);
+    box-shadow: 0 10px 18px rgba(17,24,39,.10);
+    transform: translateY(-1px);
+  }
+
+  .estado:active{
+    transform: translateY(0);
+    box-shadow: none;
+  }
+
+  /* Destaque para SP / Cadastro */
+  .estado.is-sp{
+    border-color: rgba(227,9,21,.35);
+  }
+
+  .estado.is-cadastro{
+    background: rgba(227,9,21,.06);
+    border-color: rgba(227,9,21,.35);
+    color: var(--brand-red);
+  }
+
+  .estado.is-cadastro:hover{
+    background: var(--brand-red);
+    color:#fff;
+    border-color: var(--brand-red);
+    box-shadow: 0 12px 22px rgba(227,9,21,.22);
+  }
+
+  .footer-note{
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 12px;
+    padding: 0 2px;
+  }
+
+  @media (max-width: 768px){
+    .logo-img{ width: 140px; }
+    .estados{ grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
   }
 </style>
 </head>
 
 <body>
-<div class="container">
-  <h1>Selecione seu estado</h1>
 
-  <div class="estados">
-    <div class="estado" onclick="ir('ac')">Acre</div>
-    <div class="estado" onclick="ir('al')">Alagoas</div>
-    <div class="estado" onclick="ir('ap')">Amapá</div>
-    <div class="estado" onclick="ir('am')">Amazonas</div>
-    <div class="estado" onclick="ir('ba')">Bahia</div>
-    <div class="estado" onclick="ir('ce')">Ceará</div>
-    <div class="estado" onclick="ir('df')">Distrito Federal</div>
-    <div class="estado" onclick="ir('es')">Espírito Santo</div>
-    <div class="estado" onclick="ir('go')">Goiás</div>
-    <div class="estado" onclick="ir('ma')">Maranhão</div>
-    <div class="estado" onclick="ir('mt')">Mato Grosso</div>
-    <div class="estado" onclick="ir('ms')">Mato Grosso do Sul</div>
-    <div class="estado" onclick="ir('mg')">Minas Gerais</div>
-    <div class="estado" onclick="ir('pa')">Pará</div>
-    <div class="estado" onclick="ir('pb')">Paraíba</div>
-    <div class="estado" onclick="ir('pr')">Paraná</div>
-    <div class="estado" onclick="ir('pe')">Pernambuco</div>
-    <div class="estado" onclick="ir('pi')">Piauí</div>
-    <div class="estado" onclick="ir('rj')">Rio de Janeiro</div>
-    <div class="estado" onclick="ir('rn')">Rio Grande do Norte</div>
-    <div class="estado" onclick="ir('rs')">Rio Grande do Sul</div>
-    <div class="estado" onclick="ir('ro')">Rondônia</div>
-    <div class="estado" onclick="ir('rr')">Roraima</div>
-    <div class="estado" onclick="ir('sc')">Santa Catarina</div>
-    <div class="estado" onclick="ir('spsn')">São Paulo - Regime Simples</div>
-    <div class="estado" onclick="ir('sprn')">São Paulo - Regime Normal</div>
-    <div class="estado" onclick="ir('se')">Sergipe</div>
-    <div class="estado" onclick="ir('to')">Tocantins</div>
-
-    <div class="estado" onclick="ir('externo')">Informações para Cadastro</div>
+  <!-- Topbar redes -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <span>Sapporo nas redes sociais</span>
+      <div class="social">
+        <a href="https://www.facebook.com/sapporoalimentos/?locale=pt_BR" target="_blank" rel="noopener">
+          <img src="../assets/img/facebook.svg" alt="Facebook">
+        </a>
+        <a href="https://www.instagram.com/sapporooficial/" target="_blank" rel="noopener">
+          <img src="../assets/img/instagram.svg" alt="Instagram">
+        </a>
+      </div>
+    </div>
   </div>
 
-</div>
+  <!-- Header -->
+  <div class="header">
+    <div class="header-inner">
+      <img src="../assets/img/sapporo.png" alt="Sapporo" class="logo-img">
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="card">
+      <h1>Selecione seu estado</h1>
+      <p class="subtitle">Escolha a UF para visualizar a tabela de preços correspondente.</p>
+
+      <div class="estados">
+        <div class="estado" onclick="ir('ac')">Acre</div>
+        <div class="estado" onclick="ir('al')">Alagoas</div>
+        <div class="estado" onclick="ir('ap')">Amapá</div>
+        <div class="estado" onclick="ir('am')">Amazonas</div>
+        <div class="estado" onclick="ir('ba')">Bahia</div>
+        <div class="estado" onclick="ir('ce')">Ceará</div>
+        <div class="estado" onclick="ir('df')">Distrito Federal</div>
+        <div class="estado" onclick="ir('es')">Espírito Santo</div>
+        <div class="estado" onclick="ir('go')">Goiás</div>
+        <div class="estado" onclick="ir('ma')">Maranhão</div>
+        <div class="estado" onclick="ir('mt')">Mato Grosso</div>
+        <div class="estado" onclick="ir('ms')">Mato Grosso do Sul</div>
+        <div class="estado" onclick="ir('mg')">Minas Gerais</div>
+        <div class="estado" onclick="ir('pa')">Pará</div>
+        <div class="estado" onclick="ir('pb')">Paraíba</div>
+        <div class="estado" onclick="ir('pr')">Paraná</div>
+        <div class="estado" onclick="ir('pe')">Pernambuco</div>
+        <div class="estado" onclick="ir('pi')">Piauí</div>
+        <div class="estado" onclick="ir('rj')">Rio de Janeiro</div>
+        <div class="estado" onclick="ir('rn')">Rio Grande do Norte</div>
+        <div class="estado" onclick="ir('rs')">Rio Grande do Sul</div>
+        <div class="estado" onclick="ir('ro')">Rondônia</div>
+        <div class="estado" onclick="ir('rr')">Roraima</div>
+        <div class="estado" onclick="ir('sc')">Santa Catarina</div>
+
+        <div class="estado is-sp" onclick="ir('spsn')">São Paulo - Regime Simples</div>
+        <div class="estado is-sp" onclick="ir('sprn')">São Paulo - Regime Normal</div>
+
+        <div class="estado" onclick="ir('se')">Sergipe</div>
+        <div class="estado" onclick="ir('to')">Tocantins</div>
+
+        <div class="estado is-cadastro" onclick="ir('externo')">Informações para Cadastro</div>
+      </div>
+
+    </div>
+  </div>
 
 <script>
 function ir(destino) {
-
-  // se for site externo
   if (destino === 'externo') {
     window.location.href = '../cadastro.html';
     return;
   }
-
-  // se for estado normal
   window.location.href = `tabela.html?uf=${destino}`;
 }
 </script>
+
 </body>
 </html>
