@@ -204,7 +204,9 @@
   }
 
   /* sem scroll interno */
-  #conteudo{ overflow-x: visible; }
+  #conteudo{
+    overflow-x: visible;
+  }
 
   table{
     width:100%;
@@ -213,21 +215,24 @@
     background: var(--surface);
   }
 
+  /* ✅ Cabeçalho arredondado e “cortado” de forma estável */
+  thead tr{
+    background: var(--brand-red);
+    overflow: hidden;
+  }
+
   thead th{
     position: sticky;
     top: 0;
     z-index: 2;
-
-    background: var(--brand-red);
+    border-radius: 8px;
+    background: var(--brand-red); /* ✅ importante */
     color: #fff;
     font-weight: 800;
     font-size: 13px;
     text-align:center;
     padding: 12px 10px;
     border-bottom: 1px solid rgba(255,255,255,.20);
-
-    /* arredondamento estável (como você fez) */
-    border-radius: 8px;
   }
 
   tbody td{
@@ -277,76 +282,165 @@
     tbody td{ font-size: 13px; padding: 10px 8px; }
     thead th{ font-size: 12px; padding: 10px 8px; }
 
-    .col-codigo{ display:none; }
+    .col-codigo{
+      display:none;
+    }
   }
 
   /* =========================
    TOOLTIP DE IMAGEM (PRODUTO)
    ========================= */
 
-.prod-tooltip{
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-  text-decoration: none; /* remove sublinhado */
-  transition: color .15s ease;
-}
+  .prod-tooltip{
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    text-decoration: none; /* remove sublinhado */
+    transition: color .15s ease;
+  }
 
-.prod-tooltip:hover{
-  color: var(--brand-red); /* feedback visual clean */
-}
+  .prod-tooltip:hover{
+    color: var(--brand-red); /* feedback visual clean */
+  }
 
-.prod-tooltip:focus{
-  outline: none;
-}
+  .prod-tooltip:focus{
+    outline: none;
+  }
 
-.prod-tooltip:focus-visible{
-  outline: 2px solid rgba(227,9,21,.35);
-  outline-offset: 3px;
-  border-radius: 6px;
-}
+  .prod-tooltip:focus-visible{
+    outline: 2px solid rgba(227,9,21,.35);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
 
-.tooltip-img{
-  position: absolute;
-  left: 0;
-  top: 120%;
-  width: 240px;
-  max-width: min(72vw, 240px);
-  background: #fff;
-  border: 1px solid rgba(17,24,39,.12);
-  border-radius: 12px;
-  padding: 10px;
-  box-shadow: 0 14px 32px rgba(17,24,39,.14);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-6px);
-  transition: .15s ease;
-  z-index: 9999;
-  pointer-events: none; /* evita tremida */
-}
+  .tooltip-img{
+    position: absolute;
+    left: 0;
+    top: 120%;
+    width: 240px;
+    max-width: min(72vw, 240px);
+    background: #fff;
+    border: 1px solid rgba(17,24,39,.12);
+    border-radius: 12px;
+    padding: 10px;
+    box-shadow: 0 14px 32px rgba(17,24,39,.14);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-6px);
+    transition: .15s ease;
+    z-index: 9999;
+    pointer-events: none; /* evita tremida */
+  }
 
-.tooltip-img img{
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: 10px;
-}
+  .tooltip-img img{
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+  }
 
-.tooltip-img .tooltip-caption{
-  margin-top: 8px;
-  font-size: 12px;
-  color: var(--muted);
-  line-height: 1.2;
-}
+  .tooltip-img .tooltip-caption{
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.2;
+  }
 
-.prod-tooltip:hover .tooltip-img,
-.prod-tooltip:focus .tooltip-img{
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
+  .prod-tooltip:hover .tooltip-img,
+  .prod-tooltip:focus .tooltip-img{
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
 
+  /* =========================
+     DESCONTO GERAL
+     ========================= */
+
+  .discount-row{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .discount-left{
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+    min-width: 280px;
+  }
+  .discount-title{
+    font-weight:800;
+    font-size:14px;
+    color: var(--text);
+  }
+  .discount-help{
+    font-size:12px;
+    color: var(--muted);
+    line-height:1.25;
+  }
+  .discount-controls{
+    display:flex;
+    gap:10px;
+    align-items:center;
+    flex-wrap:wrap;
+  }
+  .discount-input{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding: 10px 12px;
+    box-shadow: 0 8px 18px rgba(17,24,39,.05);
+  }
+  .discount-input label{
+    font-size:13px;
+    color: var(--muted);
+    font-weight:700;
+    white-space:nowrap;
+  }
+  .discount-input input{
+    width:110px;
+    border:0;
+    outline:0;
+    font-size:14px;
+    font-weight:800;
+    color: var(--text);
+    text-align:right;
+    background:transparent;
+  }
+  .pill{
+    font-size:12px;
+    font-weight:800;
+    color:#fff;
+    background: var(--brand-red);
+    padding: 6px 10px;
+    border-radius: 999px;
+    white-space:nowrap;
+  }
+
+  /* input desconto por linha */
+  .inp-desconto{
+    width: 92px;
+    max-width: 100%;
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 13px;
+    text-align: right;
+    outline: none;
+    background:#fff;
+  }
+  .inp-desconto:focus{
+    border-color: rgba(227,9,21,.55);
+    box-shadow: 0 0 0 4px rgba(227,9,21,.12);
+  }
 </style>
+
 </head>
 
 <body>
@@ -398,6 +492,32 @@
       </ul>
     </div>
 
+    <!-- ✅ NOVO: DESCONTO GERAL -->
+    <div class="card" id="card-desconto" style="display:none;">
+      <div class="discount-row">
+        <div class="discount-left">
+          <div class="discount-title">Desconto Negociado</div>
+          <div class="discount-help">
+            Preencha a porcentagem abaixo para aplicar em <b>todos</b> os produtos desta tabela.
+            Você também pode ajustar o desconto individualmente por item.
+          </div>
+        </div>
+
+        <div class="discount-controls">
+          <div class="discount-input">
+            <label for="desconto-geral">Desconto (%)</label>
+            <input id="desconto-geral" type="text" inputmode="decimal" placeholder="ex: 10,5">
+          </div>
+
+          <span class="pill" id="pill-desconto">0%</span>
+
+          <button class="btn btn-outline-red" id="btn-limpar-desconto" type="button">
+            Limpar desconto
+          </button>
+        </div>
+      </div>
+    </div>
+
     <div id="conteudo" class="card loading">Carregando dados…</div>
 
     <div class="footer-note">
@@ -445,20 +565,92 @@ if (uf && estados[uf]) {
   `;
 }
 
+/* =========================
+   DESCONTO (GERAL + POR ITEM)
+   ========================= */
+
+// chave do localStorage por UF
+function descontoKey(){
+  return `desconto_geral_${(uf || "semuf").toLowerCase()}`;
+}
+
+// converte texto em número (aceita vírgula)
+function parsePct(v){
+  const n = parseFloat(String(v ?? "").trim().replace(",", "."));
+  if (Number.isNaN(n)) return 0;
+  return Math.max(0, Math.min(100, n));
+}
+
+function formatPct(n){
+  // mostra 0,00 quando tiver decimal, mas não força
+  const hasDecimal = Math.abs(n - Math.round(n)) > 1e-9;
+  return hasDecimal ? n.toFixed(2).replace(".", ",") : String(Math.round(n));
+}
+
+function aplicarDescontoGeralNaTabela(pct){
+  document.querySelectorAll(".inp-desconto").forEach(inp => {
+    inp.value = pct ? formatPct(pct) : "";
+  });
+  document.querySelectorAll("tbody tr").forEach(tr => recalcularLinha(tr));
+}
+
+function atualizarPill(pct){
+  document.getElementById("pill-desconto").textContent = `${formatPct(pct)}%`;
+}
+
+function initDescontoGeral(){
+  const card = document.getElementById("card-desconto");
+  const inp  = document.getElementById("desconto-geral");
+  const btn  = document.getElementById("btn-limpar-desconto");
+
+  // mostra card só quando estiver em UF válida
+  if (uf && estados[uf]) card.style.display = "";
+
+  // carrega desconto salvo
+  const salvo = parsePct(localStorage.getItem(descontoKey()));
+  if (salvo) inp.value = formatPct(salvo);
+  atualizarPill(salvo);
+
+  // ao digitar: salva, aplica e recalcula
+  inp.addEventListener("input", () => {
+    const pct = parsePct(inp.value);
+    atualizarPill(pct);
+    localStorage.setItem(descontoKey(), String(pct));
+    aplicarDescontoGeralNaTabela(pct);
+  });
+
+  // limpar
+  btn.addEventListener("click", () => {
+    inp.value = "";
+    atualizarPill(0);
+    localStorage.removeItem(descontoKey());
+    aplicarDescontoGeralNaTabela(0);
+  });
+}
+
+/* =========================
+   CÁLCULO
+   ========================= */
+
+function calcularPreco(precoBase, aliqInter, iva, aliqDest) {
+  const valor1 = (precoBase + (precoBase * iva)) * aliqDest;
+  const valor2 = precoBase * aliqInter;
+  return precoBase + (valor1 - valor2);
+}
+
+// aplica desconto ANTES do imposto (recomendado)
+function calcularPrecoComDesconto(precoBase, descontoPct, aliqInter, iva, aliqDest){
+  const fator = 1 - (descontoPct / 100);
+  const baseDesc = precoBase * fator;
+  return calcularPreco(baseDesc, aliqInter, iva, aliqDest);
+}
+
 /* ================================
    TOOLTIP: como obter o link da foto
-   ================================
-   1) Se sua planilha já tiver uma coluna com URL da imagem, use aqui.
-      Exemplos comuns: row.imagem_url, row.imagem, row.foto, row.linkimagem...
-      Ajuste a lista de candidatos abaixo.
-*/
+   ================================ */
 function getImagemUrl(row){
   const candidatos = [
-    row.imagem_url,
-    row.imagem,
-    row.foto,
-    row.linkimagem,
-    row.url_imagem
+    row.imagem_url
   ].filter(Boolean);
 
   if (candidatos.length) return String(candidatos[0]).trim();
@@ -474,25 +666,23 @@ function escapeHtml(str){
     .replaceAll("'","&#039;");
 }
 
-/* ⚠️ Mantido: cálculo COM desconto (não mexi na lógica) */
-function calcularPreco(precoBase, desconto, aliqInter, iva, aliqDest) {
-  const descontoDecimal = desconto <= 1 ? desconto : desconto / 100;
-  const precoComDesconto = precoBase - (precoBase * descontoDecimal);
-  const valor1 = (precoComDesconto + (precoComDesconto * iva)) * aliqDest;
-  const valor2 = precoComDesconto * aliqInter;
-  return precoComDesconto + (valor1 - valor2);
-}
-
-/* ======= EXPORTAÇÃO XLSX (mantida) ======= */
+/* ======= FUNÇÃO DO CÓDIGO DA MEMÓRIA (COMPLETA) ======= */
 function baixarPlanilhaXLSX() {
-  if (!uf || dadosGlobais.length === 0) {
+  if (!uf) {
     alert("Selecione um estado válido.");
     return;
   }
 
-  const ufSheet = uf.toLowerCase();
+  // ✅ pega as linhas reais da tabela na tela (com descontos por item)
+  const trs = Array.from(document.querySelectorAll("table tbody tr"));
+  if (trs.length === 0) {
+    alert("A tabela ainda não foi carregada.");
+    return;
+  }
+
   const nomeEstado = estados[uf] || uf;
 
+  // Data + hora (sem segundos)
   const agora = new Date();
   const dataHora =
     agora.toLocaleDateString("pt-BR") +
@@ -501,38 +691,59 @@ function baixarPlanilhaXLSX() {
 
   const linhas = [];
 
+  // Cabeçalho visual (3 linhas + 1 em branco)
   linhas.push([`Tabela de Preços Distribuidor – ${nomeEstado} (${uf})`]);
   linhas.push(["Valores calculados automaticamente conforme o estado"]);
   linhas.push([`Gerado em: ${dataHora}`]);
   linhas.push([]);
 
+  // ✅ Cabeçalho da tabela (com Desconto)
   linhas.push([
     "Código",
     "Produto",
     "EAN (Cód. de Barras)",
     "Preço Base (R$)",
-    "Desconto Máximo",
+    "Desconto (%)",
     "NCM (Classificação Fiscal)",
     "CEST",
     "Alíq. Inter. (%)",
     "IVA (%)",
     "ST (%)",
-    "Preço Final (R$)",
+    "Preço Final c/ Desconto (R$)",
     "Qtd. por Caixa",
     "DUN (Código de Barras)",
     "Validade (dias)",
   ]);
 
-  dadosGlobais.forEach((row) => {
-    const precoBase = parseFloat(row.precobase);
-    const aliqInter = parseFloat(row[`aliqinter_${ufSheet}`]) / 100;
-    const iva = parseFloat(row[`iva_${ufSheet}`]) / 100;
-    const aliqDest = parseFloat(row[`aliqdest_${ufSheet}`]) / 100;
-    const desconto = parseFloat(row.desconto) / 100;
+  // ✅ Para manter as colunas extras (EAN/NCM/CEST etc.) como você já tinha,
+  // vamos buscar o "row original" pelo código usando dadosGlobais
+  const mapPorCodigo = new Map();
+  (dadosGlobais || []).forEach(r => {
+    const key = String(r.codigo ?? "").trim();
+    if (key) mapPorCodigo.set(key, r);
+  });
 
-    if (isNaN(precoBase) || isNaN(desconto) || isNaN(aliqInter) || isNaN(iva) || isNaN(aliqDest)) return;
+  // ✅ varre cada linha visível e usa o desconto do input daquela linha
+  trs.forEach(tr => {
+    const codigo = String(tr.querySelector(".col-codigo")?.textContent ?? "").trim();
 
-    const precoFinal = calcularPreco(precoBase, desconto, aliqInter, iva, aliqDest);
+    const row = mapPorCodigo.get(codigo) || {}; // fallback se não achar
+
+    const precoBase = parseFloat(tr.getAttribute("data-preco-base") || "0");
+    const aliqInter = parseFloat(tr.getAttribute("data-aliq-inter") || "0");
+    const iva       = parseFloat(tr.getAttribute("data-iva") || "0");
+    const aliqDest  = parseFloat(tr.getAttribute("data-aliq-dest") || "0");
+
+    if (
+      Number.isNaN(precoBase) ||
+      Number.isNaN(aliqInter) ||
+      Number.isNaN(iva) ||
+      Number.isNaN(aliqDest)
+    ) return;
+
+    // ✅ desconto por item (B)
+    const descontoPct = parsePct(tr.querySelector(".inp-desconto")?.value || "");
+    const precoFinal = calcularPrecoComDesconto(precoBase, descontoPct, aliqInter, iva, aliqDest);
 
     const precoBaseNum = Number(precoBase.toFixed(2));
     const precoFinalNum = Number(precoFinal.toFixed(2));
@@ -541,17 +752,23 @@ function baixarPlanilhaXLSX() {
     const dunTxt = row.dun ? String(row.dun) : "";
 
     linhas.push([
-      row.codigo,
+      row.codigo ?? codigo,
       row.produto || "",
+
       eanTxt,
       precoBaseNum,
-      desconto,
+
+      descontoPct / 100, // fração para Excel formatar %
+
       row.ncm || "",
       row.cest || "",
-      aliqInter,
-      iva,
-      aliqDest,
+
+      aliqInter,  // fração
+      iva,        // fração
+      aliqDest,   // fração
+
       precoFinalNum,
+
       row.quantd_caixa ?? "",
       dunTxt,
       row.validade_em_dias ?? "",
@@ -560,7 +777,7 @@ function baixarPlanilhaXLSX() {
 
   const ws = XLSX.utils.aoa_to_sheet(linhas);
 
-  // --- Mesclas do cabeçalho (A até M) ---
+  // --- Mesclas do cabeçalho (A até N) ---
   ws["!merges"] = [
     { s: { r: 0, c: 0 }, e: { r: 0, c: 13 } },
     { s: { r: 1, c: 0 }, e: { r: 1, c: 13 } },
@@ -574,7 +791,7 @@ function baixarPlanilhaXLSX() {
     { wch: 54 }, // Produto
     { wch: 18 }, // EAN
     { wch: 14 }, // Preço Base
-    { wch: 10 }, // Desconto
+    { wch: 12 }, // Desconto
     { wch: 18 }, // NCM
     { wch: 12 }, // CEST
     { wch: 12 }, // Aliq Inter
@@ -586,6 +803,7 @@ function baixarPlanilhaXLSX() {
     { wch: 12 }, // Validade
   ];
 
+  // --- Estilos (xlsx-js-style) ---
   const headerBg = "E30915";
   const grid = "D1D5DB";
   const dark = "111827";
@@ -601,6 +819,7 @@ function baixarPlanilhaXLSX() {
 
   function setStyle(addr, patch) {
     if (!ws[addr]) return;
+
     ws[addr].s = ws[addr].s || {};
     ws[addr].s = {
       ...ws[addr].s,
@@ -612,21 +831,25 @@ function baixarPlanilhaXLSX() {
     };
   }
 
+  // Título
   setStyle(XLSX.utils.encode_cell({ r: 0, c: 0 }), {
     font: { bold: true, sz: 16, color: { rgb: dark } },
     alignment: { horizontal: "center", vertical: "center" },
   });
 
+  // Subtítulo
   setStyle(XLSX.utils.encode_cell({ r: 1, c: 0 }), {
     font: { sz: 11, color: { rgb: muted } },
     alignment: { horizontal: "center", vertical: "center" },
   });
 
+  // Data/hora
   setStyle(XLSX.utils.encode_cell({ r: 2, c: 0 }), {
     font: { sz: 10, italic: true, color: { rgb: muted2 } },
     alignment: { horizontal: "center", vertical: "center" },
   });
 
+  // Cabeçalho da tabela (linha 4)
   const headerRow = 4;
   for (let C = 0; C <= 13; C++) {
     const addr = XLSX.utils.encode_cell({ r: headerRow, c: C });
@@ -638,21 +861,26 @@ function baixarPlanilhaXLSX() {
     });
   }
 
+  // Range completo
   const range = XLSX.utils.decode_range(ws["!ref"]);
 
+  // Formatos: moeda e percentuais
   for (let R = 5; R <= range.e.r; R++) {
+    // Moeda: Preço Base (col 3) e Preço Final (col 10)
     const cBase = XLSX.utils.encode_cell({ r: R, c: 3 });
     if (ws[cBase]) ws[cBase].z = '"R$" #,##0.00';
 
     const cFinal = XLSX.utils.encode_cell({ r: R, c: 10 });
     if (ws[cFinal]) ws[cFinal].z = '"R$" #,##0.00';
 
+    // Percentuais: Desconto (4), AliqInter (7), IVA (8), ST (9)
     for (const C of [4, 7, 8, 9]) {
       const addr = XLSX.utils.encode_cell({ r: R, c: C });
       if (ws[addr]) ws[addr].z = "0.00%";
     }
   }
 
+  // Alinhamentos e bordas
   for (let R = range.s.r; R <= range.e.r; R++) {
     for (let C = range.s.c; C <= range.e.c; C++) {
       const addr = XLSX.utils.encode_cell({ r: R, c: C });
@@ -661,12 +889,19 @@ function baixarPlanilhaXLSX() {
       ws[addr].s = ws[addr].s || {};
       ws[addr].s.border = ws[addr].s.border || borderThin;
 
+      // não mexe nas 4 linhas do topo
       if (R < 4) continue;
-      if (R === 4) continue;
+      if (R === 4) continue; // cabeçalho já foi
 
       let horizontal = "left";
+
+      // Produto, EAN, DUN → esquerda
       if ([1, 2, 12].includes(C)) horizontal = "left";
+
+      // NCM/CEST → centro
       if ([5, 6].includes(C)) horizontal = "center";
+
+      // Numéricos → direita
       if ([0, 3, 4, 7, 8, 9, 10, 11, 13].includes(C)) horizontal = "right";
 
       setStyle(addr, {
@@ -680,12 +915,32 @@ function baixarPlanilhaXLSX() {
   XLSX.utils.book_append_sheet(wb, ws, "Tabela de Preços");
   XLSX.writeFile(wb, `tabela_precos_distribuidor_${uf}.xlsx`);
 }
-/* ======= FIM EXPORTAÇÃO ======= */
+
+/* ======= FIM DA FUNÇÃO DO CÓDIGO DA MEMÓRIA ======= */
 
 const conteudo = document.getElementById("conteudo");
 conteudo.classList.add("loading");
 
 let dadosGlobais = [];
+
+function recalcularLinha(tr){
+  if (!tr) return;
+
+  const precoBase = parseFloat(tr.getAttribute("data-preco-base") || "0");
+  const aliqInter = parseFloat(tr.getAttribute("data-aliq-inter") || "0");
+  const iva       = parseFloat(tr.getAttribute("data-iva") || "0");
+  const aliqDest  = parseFloat(tr.getAttribute("data-aliq-dest") || "0");
+
+  const inp = tr.querySelector(".inp-desconto");
+  const descontoPct = parsePct(inp?.value || "");
+
+  // recalcula
+  const precoFinal = calcularPrecoComDesconto(precoBase, descontoPct, aliqInter, iva, aliqDest);
+
+  // atualiza célula final
+  const tdFinal = tr.querySelector(".td-preco-final");
+  if (tdFinal) tdFinal.innerHTML = `<strong>R$ ${precoFinal.toFixed(2)}</strong>`;
+}
 
 if (uf && estados[uf]) {
   fetch(SHEET_URL)
@@ -698,10 +953,10 @@ if (uf && estados[uf]) {
           <thead>
             <tr>
               <th class="col-codigo">Código</th>
-              <th class="col-produto">Produto</th>
-              <th class="col-base">Preço base</th>
-              <th class="col-desc">Desc. Máximo</th>
-              <th class="col-final">Preço final (com desconto)</th>
+              <th>Produto</th>
+              <th>Preço base</th>
+              <th>Desconto (%)</th>
+              <th>Preço final c/ Desconto</th>
             </tr>
           </thead>
           <tbody>
@@ -717,13 +972,9 @@ if (uf && estados[uf]) {
         const iva       = parseFloat(row[`iva_${ufSheet}`]) / 100;
         const aliqDest  = parseFloat(row[`aliqdest_${ufSheet}`]) / 100;
 
-        const desconto = parseFloat(row.desconto) / 100;
-
-        if (isNaN(precoBase) || isNaN(desconto) || isNaN(aliqInter) || isNaN(iva) || isNaN(aliqDest)) return;
+        if (isNaN(aliqInter) || isNaN(iva) || isNaN(aliqDest) || isNaN(precoBase)) return;
 
         linhasRenderizadas++;
-
-        const precoFinal = calcularPreco(precoBase, desconto, aliqInter, iva, aliqDest);
 
         const nomeProduto = row.produto ?? "";
         const imgUrl = getImagemUrl(row);
@@ -740,13 +991,28 @@ if (uf && estados[uf]) {
           `
           : escapeHtml(nomeProduto);
 
+        // desconto inicial (do geral salvo)
+        const descontoInicial = parsePct(localStorage.getItem(descontoKey()));
+
+        const precoFinal = calcularPrecoComDesconto(precoBase, descontoInicial, aliqInter, iva, aliqDest);
+
         html += `
-          <tr>
-            <td class="valor col-codigo">${escapeHtml(row.codigo ?? "")}</td>
+          <tr
+            data-preco-base="${precoBase}"
+            data-aliq-inter="${aliqInter}"
+            data-iva="${iva}"
+            data-aliq-dest="${aliqDest}"
+          >
+            <td class="col-codigo">${escapeHtml(row.codigo ?? "")}</td>
             <td class="col-produto">${produtoHtml}</td>
-            <td class="valor col-base">R$ ${precoBase.toFixed(2)}</td>
-            <td class="valor col-desc">${escapeHtml(row.desconto ?? "")}%</td>
-            <td class="valor col-final"><strong>R$ ${precoFinal.toFixed(2)}</strong></td>
+            <td class="valor">R$ ${precoBase.toFixed(2)}</td>
+
+            <td class="valor">
+              <input class="inp-desconto" type="text" inputmode="decimal" placeholder="0"
+                value="${descontoInicial ? formatPct(descontoInicial) : ""}">
+            </td>
+
+            <td class="valor td-preco-final"><strong>R$ ${precoFinal.toFixed(2)}</strong></td>
           </tr>
         `;
       });
@@ -760,14 +1026,27 @@ if (uf && estados[uf]) {
       html += "</tbody></table>";
       conteudo.classList.remove("loading");
       conteudo.innerHTML = html;
+
+      // ✅ inicializa UI do desconto geral (e aplica se tiver)
+      initDescontoGeral();
+
+      // ✅ se já tiver desconto salvo, garante aplicar em todas as linhas
+      const salvo = parsePct(localStorage.getItem(descontoKey()));
+      if (salvo) aplicarDescontoGeralNaTabela(salvo);
     })
     .catch(err => {
       conteudo.innerText = "Erro ao carregar dados da planilha.";
       console.error(err);
     });
-} else {
-  conteudo.classList.remove("loading");
 }
+
+// recalcular quando digitar desconto por item
+document.addEventListener("input", (e) => {
+  if (e.target.classList.contains("inp-desconto")) {
+    const tr = e.target.closest("tr");
+    recalcularLinha(tr);
+  }
+});
 
 document.getElementById("btn-exportar")
   ?.addEventListener("click", baixarPlanilhaXLSX);
@@ -775,4 +1054,3 @@ document.getElementById("btn-exportar")
 
 </body>
 </html>
-
