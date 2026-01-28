@@ -347,11 +347,30 @@
 
   const params = new URLSearchParams(window.location.search);
   const origem = (params.get("origem") || "DESCONHECIDO").toUpperCase();
+
+  function guessOrigemFromReferrer() {
+  const ref = (document.referrer || "").toLowerCase();
+  if (!ref) return "";
+
+  if (ref.includes("/varejista")) return "VAREJISTA";
+  if (ref.includes("/distribuidor")) return "DISTRIBUIDOR";
+  if (ref.includes("/cif")) return "CIF";
+  return "";
+}
+
+let origemFinal = origem;
+if (origemFinal === "DESCONHECIDO") {
+  const guessed = guessOrigemFromReferrer();
+  if (guessed) origemFinal = guessed;
+}
+
+
+
   const ufTabela = params.get("uf"); // opcional
 
   // Mostrar a origem no subtítulo (fica elegante e ajuda suporte)
   const sub = document.getElementById("sub-origem");
-  if (sub) sub.textContent = origem !== "DESCONHECIDO" ? `Origem: ${origem}` : "";
+  if (sub) sub.textContent = origemFinal !== "DESCONHECIDO" ? `Origem: ${origemFinal}` : "";
 
   function onlyDigits(v){ return String(v || "").replace(/\D+/g, ""); }
 
@@ -467,13 +486,20 @@
     const fd = new FormData(form);
 
     // ✅ NOVO: origem do cadastro (VAREJISTA / DISTRIBUIDOR / CIF)
-    fd.append("origem", origem);
+    fd.append("origem", origemFinal);
 
     // ✅ opcional: uf da tabela (se vier na URL)
     if (ufTabela) fd.append("uf_tabela", String(ufTabela).toUpperCase());
 
     // ✅ opcional: auditoria de onde veio (ajuda suporte)
     fd.append("referrer", document.referrer || "");
+
+    console.log("ORIGEM ENVIADA:", origem);
+    console.log("UF_TABELA ENVIADA:", ufTabela);
+    console.log("ENDPOINT:", CADASTRO_ENDPOINT);
+
+
+
 
     try {
       // Mantendo no-cors para evitar "Failed to fetch" por CORS
