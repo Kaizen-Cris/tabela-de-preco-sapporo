@@ -533,12 +533,28 @@
 <script>
 const SHEET_URL = "https://opensheet.elk.sh/1j2KHRhrNJCy_gNS3gdaUvwQX3LacU3OmyaSKujMN7Dw/DISTRIBUIDOR";
 
+// 🔖 Identificação da origem desta tabela
+const ORIGEM_SITE = "DISTRIBUIDOR";
+
 function getEstadoFromURL() {
   const params = new URLSearchParams(window.location.search);
   return params.get('uf');
 }
 
 const uf = getEstadoFromURL()?.toUpperCase();
+
+function montarLinkCadastro() {
+  const link = document.getElementById("link-cadastro");
+  if (!link) return;
+
+  const params = new URLSearchParams(window.location.search);
+  const u = (params.get("uf") || "").toUpperCase();
+
+  link.href = `../cadastro.html?origem=${encodeURIComponent(ORIGEM_SITE)}&uf=${encodeURIComponent(u)}`;
+}
+  
+// garante que roda assim que o DOM estiver pronto
+document.addEventListener("DOMContentLoaded", montarLinkCadastro);
 
 const estados = {
   AC: 'Acre', AL: 'Alagoas', AP: 'Amapá', AM: 'Amazonas', BA: 'Bahia', CE: 'Ceará', DF: 'Distrito Federal',
