@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pedido • Mayumi</title>
+
+  <style>
+    :root{
+      --brand-red:#e30915;
+      --bg:#f4f6f8;
+      --card:#ffffff;
+      --text:#111827;
+      --muted:#6b7280;
+      --border:#e5e7eb;
+      --green:#16a34a;
+      --green-hover:#15803d;
+      --shadow:0 10px 28px rgba(17,24,39,.08);
+      --radius:14px;
+    }
+
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Inter,system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;background:var(--bg);color:var(--text)}
+    a{color:var(--brand-red);text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    .topbar{background:var(--card);border-bottom:1px solid var(--border)}
+    .topbar-inner{max-width:1100px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;justify-content:flex-end;gap:10px;color:var(--muted);font-size:13px}
+    .social{display:flex;gap:10px;align-items:center}
+    .social a{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:10px;border:1px solid var(--border);background:#fff;text-decoration:none;transition:all .2s ease}
+    .social a:hover{transform:translateY(-1px);box-shadow:0 8px 16px rgba(17,24,39,.10)}
+    .social img{width:16px;height:16px;display:block}
+
+    .header{background:var(--card);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
+    .header-inner{max-width:1100px;margin:0 auto;padding:14px 16px;display:grid;grid-template-columns:1fr auto 1fr;gap:14px;align-items:center}
+    .brand{display:flex;align-items:center;gap:14px;min-width:240px;justify-self:start}
+    .logo-img{width:160px;max-width:42vw;height:auto;display:block}
+    .header-title{display:flex;flex-direction:column;gap:8px;min-width:260px;justify-self:center;text-align:center}
+    .header-title h1{margin:0;font-size:18px;font-weight:800}
+    .header-title p{margin:0;color:var(--muted);font-size:13px;line-height:1.35}
+
+    .actions{justify-self:end;display:flex;gap:10px;flex-wrap:wrap}
+
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;font-size:14px;font-weight:800;border-radius:10px;border:1px solid transparent;text-decoration:none;cursor:pointer;transition:all .2s ease;user-select:none;white-space:nowrap}
+    .btn:active{transform:translateY(0);box-shadow:none}
+    .btn:disabled{opacity:.65;cursor:not-allowed;transform:none;box-shadow:none}
+    .btn-outline-red{background:#fff;color:var(--brand-red);border-color:var(--brand-red)}
+    .btn-outline-red:hover{background:var(--brand-red);color:#fff;box-shadow:0 10px 18px rgba(227,9,21,.25);transform:translateY(-1px)}
+    .btn-green{background:var(--green);border-color:var(--green);color:#fff}
+    .btn-green:hover{background:var(--green-hover);border-color:var(--green-hover);box-shadow:0 10px 18px rgba(22,163,74,.28);transform:translateY(-1px)}
+    .btn-outline{background:#fff;border-color:var(--border);color:var(--text)}
+    .btn-outline:hover{background:#f9fafb;box-shadow:0 4px 12px rgba(17,24,39,.06);transform:translateY(-1px)}
+
+    .wrap{max-width:1100px;margin:0 auto;padding:16px}
+    .card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;margin-top:16px}
+    .card h2{margin:0 0 12px;font-size:16px;font-weight:800}
+
+    .bullets{margin:0;padding:0;list-style:none;display:grid;gap:8px;color:var(--muted);font-size:13px;line-height:1.35}
+    .bullets a{color:var(--brand-red);font-weight:700}
+    .bullets a:hover{text-decoration:underline}
+
+    .loading{padding:30px;text-align:center;color:var(--muted);font-weight:600}
+
+    /* Desconto geral */
+    .discount-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:12px}
+    .discount-left{display:flex;flex-direction:column;gap:4px;min-width:280px}
+    .discount-title{font-weight:800;font-size:14px}
+    .discount-help{font-size:12px;color:var(--muted);line-height:1.25}
+    .discount-controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .discount-input{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:12px;padding:10px 12px}
+    .discount-input label{font-size:13px;color:var(--muted);font-weight:700;white-space:nowrap}
+    .discount-input input{width:110px;border:0;outline:0;font-size:14px;font-weight:800;text-align:right;background:transparent}
+    .pill{font-size:12px;font-weight:800;color:#fff;background:var(--brand-red);padding:6px 10px;border-radius:999px;white-space:nowrap}
+
+    /* Dados do cliente */
+    .cliente-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+    .cliente-grid .f{display:flex;flex-direction:column;gap:6px}
+    .cliente-grid label{font-size:13px;font-weight:800}
+    .cliente-grid input{padding:10px 12px;border:1px solid var(--border);border-radius:10px;font-size:14px;outline:none;background:#fff}
+    .cliente-grid input:focus{border-color:rgba(227,9,21,.45);box-shadow:0 0 0 4px rgba(227,9,21,.10)}
+    .cliente-grid input.invalid{border-color:var(--brand-red);background:#fef2f2}
+    .hint.err{color:var(--brand-red);font-weight:700}
+    .hint.ok{color:var(--green);font-weight:700}
+
+    /* Tabela de pedido */
+    table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card)}
+    thead tr{background:var(--brand-red)}
+    thead th{position:sticky;top:0;z-index:2;border-radius:8px;background:var(--brand-red);color:#fff;font-weight:800;font-size:13px;text-align:center;padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.20)}
+    tbody td{padding:12px 10px;border-bottom:1px solid var(--border);font-size:14px}
+    tbody tr:nth-child(even){background:#fff}
+    tbody tr:hover{background:#fafafa}
+    tbody tr.has-qty{background:#fef2f2}
+
+    .col-codigo{text-align:center;white-space:nowrap}
+    .col-produto{white-space:normal;word-break:break-word;overflow-wrap:anywhere;line-height:1.25}
+    .valor{text-align:center;white-space:nowrap}
+    .qtd{width:100px}
+    .subtotal{text-align:center;font-weight:800;white-space:nowrap}
+
+    input[type="number"]{width:100%;padding:8px 6px;border:1px solid var(--border);border-radius:8px;font-size:14px;text-align:center;outline:none;background:#fff;-moz-appearance:textfield}
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0}
+    input[type="number"]:focus{border-color:rgba(227,9,21,.45);box-shadow:0 0 0 3px rgba(227,9,21,.10)}
+
+    .inp-desconto{width:80px;padding:8px 6px;border:1px solid var(--border);border-radius:8px;font-weight:800;font-size:13px;text-align:center;outline:none;background:#fff}
+    .inp-desconto:focus{border-color:rgba(227,9,21,.55);box-shadow:0 0 0 4px rgba(227,9,21,.12)}
+
+    /* Totais */
+    .totais-bar{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px;margin-top:16px}
+    .totais-grid{display:flex;gap:16px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+    .kpi{padding:12px 16px;border:1px dashed var(--border);border-radius:12px;background:#fcfcfd;min-width:140px}
+    .kpi .label{font-size:12px;color:var(--muted)}
+    .kpi .value{font-size:20px;font-weight:900;margin-top:2px}
+    .kpi .value.total{color:var(--brand-red)}
+    .actions-bottom{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+    /* Modal resumo */
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:1000;display:none;align-items:center;justify-content:center;padding:16px}
+    .modal-overlay.active{display:flex}
+    .modal{background:#fff;border-radius:16px;max-width:600px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 24px 48px rgba(0,0,0,.18);padding:24px}
+    .modal h2{margin:0 0 16px;font-size:18px;font-weight:800;color:var(--brand-red)}
+    .modal pre{background:#f9fafb;border:1px solid var(--border);border-radius:10px;padding:16px;font-size:13px;line-height:1.5;white-space:pre-wrap;word-break:break-word;font-family:Inter,system-ui,monospace}
+    .modal-actions{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+
+    /* Modal escolha do contato comercial */
+    .contato-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:6px}
+    .contato-btn{display:flex;flex-direction:column;gap:4px;align-items:flex-start;padding:16px;border:2px solid var(--border);border-radius:12px;background:#fff;cursor:pointer;text-align:left;font-family:inherit;transition:all .2s ease}
+    .contato-btn:hover{border-color:var(--green);background:#f0fdf4;transform:translateY(-2px);box-shadow:0 10px 18px rgba(22,163,74,.18)}
+    .contato-btn .nome{font-size:16px;font-weight:800;color:var(--text)}
+    .contato-btn .zap{font-size:13px;color:var(--muted)}
+
+    .hint{color:var(--muted);font-size:12px;margin-top:2px}
+
+    @media(max-width:860px){
+      .header-inner{grid-template-columns:1fr;justify-items:center;text-align:center}
+      .brand{min-width:unset;justify-self:center}
+      .header-title{min-width:unset;justify-self:center}
+      .actions{justify-self:center}
+      .cliente-grid{grid-template-columns:1fr}
+      .col-codigo{display:none}
+      .qtd{width:80px}
+      .kpi{min-width:120px}
+      .discount-row{flex-direction:column;align-items:flex-start}
+    }
+
+    @media print{
+      .topbar,.header,.actions-bottom,.btn,.modal-overlay,.discount-row{display:none!important}
+      .card{box-shadow:none;border:1px solid #ccc}
+      body{background:#fff}
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <span>Sapporo nas redes sociais</span>
+      <div class="social">
+        <a href="https://www.facebook.com/sapporoalimentos/?locale=pt_BR" target="_blank" rel="noopener">
+          <img src="../assets/img/facebook.svg" alt="Facebook">
+        </a>
+        <a href="https://www.instagram.com/sapporooficial/" target="_blank" rel="noopener">
+          <img src="../assets/img/instagram.svg" alt="Instagram">
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="header">
+    <div class="header-inner">
+      <div class="brand">
+        <img src="../assets/img/sapporo.png" alt="Sapporo" class="logo-img">
+      </div>
+
+      <div class="header-title">
+        <h1 id="titulo">Pedido • Mayumi</h1>
+        <p id="subtitulo">Preencha quantidades e aplique descontos negociados</p>
+      </div>
+
+      <div class="actions">
+        <a id="btn-voltar" href="tabela.html" class="btn btn-outline-red">← Voltar</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <div class="card">
+      <h2>Dados do Cliente</h2>
+      <div class="cliente-grid">
+        <div class="f">
+          <label>Nome da loja / Razão social*</label>
+          <input id="cliente-nome" placeholder="Ex.: Mercado do João" />
+        </div>
+        <div class="f">
+          <label>Responsável</label>
+          <input id="cliente-responsavel" placeholder="Nome do responsável" />
+        </div>
+        <div class="f">
+          <label>WhatsApp para contato</label>
+          <input id="cliente-whatsapp" placeholder="(11) 99999-9999" inputmode="numeric" />
+        </div>
+        <div class="f">
+          <label>CNPJ / CPF</label>
+          <input id="cliente-documento" placeholder="123.456.789-00 ou 12.345.678/0001-90" inputmode="numeric" maxlength="18" />
+          <span class="hint" id="documento-hint">Obrigatório — informe o CPF (11 dígitos) ou CNPJ (14 dígitos).</span>
+        </div>
+      </div>
+      <p class="hint" style="margin-top:8px">Os dados são salvos automaticamente no navegador (rascunho).</p>
+    </div>
+
+    <div class="card">
+      <div class="discount-row">
+        <div class="discount-left">
+          <div class="discount-title">Desconto Negociado</div>
+          <div class="discount-help">
+            Preencha a porcentagem abaixo para aplicar em <b>todos</b> os produtos desta tabela.
+            Você também pode ajustar o desconto individualmente por item.
+          </div>
+        </div>
+        <div class="discount-controls">
+          <div class="discount-input">
+            <label for="desconto-geral">Desconto (%)</label>
+            <input id="desconto-geral" type="text" inputmode="decimal" placeholder="ex: 10,5" />
+          </div>
+          <span class="pill" id="pill-desconto">0%</span>
+          <button class="btn btn-outline-red" id="btn-limpar-desconto" type="button">Limpar desconto</button>
+        </div>
+      </div>
+
+      <ul class="bullets">
+        <li><b>•</b> O <strong>preço unitário</strong> é o preço final com desconto aplicado.</li>
+        <li><b>•</b> Se você preencher <strong>caixas</strong>, o sistema multiplica por <strong>Qtd por caixa</strong> e soma com <strong>unidades</strong>.</li>
+        <li><b>•</b> Ao final, clique em <strong>"Enviar pedido por WhatsApp"</strong> para enviar o resumo formatado para a <strong>Mayumi</strong>.</li>
+      </ul>
+    </div>
+
+    <div id="conteudo" class="card loading" style="margin-top:16px">Carregando produtos…</div>
+
+    <div class="totais-bar" id="totais-bar" style="display:none">
+      <div class="totais-grid">
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <div class="kpi">
+            <div class="label">Itens selecionados</div>
+            <div class="value" id="kpi-itens">0</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Total de unidades</div>
+            <div class="value" id="kpi-unidades">0</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Valor total</div>
+            <div class="value total" id="kpi-total">R$ 0,00</div>
+          </div>
+        </div>
+
+        <div class="actions-bottom">
+          <button class="btn btn-green" id="btn-whats">📲 Enviar pelo WhatsApp</button>
+          <button class="btn btn-outline" id="btn-resumo">📋 Ver resumo</button>
+          <button class="btn btn-outline" id="btn-imprimir">🖨️ Imprimir</button>
+          <button class="btn btn-outline" id="btn-limpar">🧹 Limpar</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Modal de resumo -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <h2>📋 Resumo do Pedido</h2>
+      <pre id="modal-texto"></pre>
+      <div class="modal-actions">
+        <button class="btn btn-green" id="modal-whats">📲 Enviar pelo WhatsApp</button>
+        <button class="btn btn-outline" id="modal-copiar">📋 Copiar texto</button>
+        <button class="btn btn-outline" id="modal-fechar">✕ Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal de escolha do contato comercial -->
+  <div class="modal-overlay" id="modal-contato">
+    <div class="modal">
+      <h2>📲 Para quem enviar o pedido?</h2>
+      <p class="hint" style="margin:0 0 12px">Escolha a responsável do comercial que vai acompanhar o seu pedido.</p>
+      <div class="contato-grid" id="contato-grid"></div>
+      <div class="modal-actions">
+        <button class="btn btn-outline" id="contato-cancelar">✕ Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SHEET_URL = "https://opensheet.elk.sh/1j2KHRhrNJCy_gNS3gdaUvwQX3LacU3OmyaSKujMN7Dw/MAYUMI";
+    const CONTATOS_COMERCIAL = [
+      { nome: "Mayumi", telefone: "551176162242" }
+    ];
+    const TIPO_PEDIDO = "MAYUMI";
+    const STORAGE_KEY = "pedido_mayumi_rascunho";
+    const DESCONTO_MAX = 100;
+
+    function getEstadoFromURL(){
+      const params = new URLSearchParams(window.location.search);
+      return params.get('uf');
+    }
+
+    const uf = getEstadoFromURL()?.toUpperCase();
+
+    const estados = {
+      AC:'Acre',AL:'Alagoas',AP:'Amapá',AM:'Amazonas',BA:'Bahia',CE:'Ceará',DF:'Distrito Federal',
+      ES:'Espírito Santo',GO:'Goiás',MA:'Maranhão',MT:'Mato Grosso',MS:'Mato Grosso do Sul',MG:'Minas Gerais',
+      PA:'Pará',PB:'Paraíba',PR:'Paraná',PE:'Pernambuco',PI:'Piauí',RJ:'Rio de Janeiro',RN:'Rio Grande do Norte',
+      RS:'Rio Grande do Sul',RO:'Rondônia',RR:'Roraima',SC:'Santa Catarina',SPSN:'São Paulo - Regime Simples',
+      SPRN:'São Paulo - Regime Normal',SP:'São Paulo',SE:'Sergipe',TO:'Tocantins'
+    };
+
+    function formatBRL(v){
+      return (v||0).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+    }
+
+    function calcularPreco(precoBase,aliqInter,iva,aliqDest){
+      const valor1=(precoBase+(precoBase*iva))*aliqDest;
+      const valor2=precoBase*aliqInter;
+      return precoBase+(valor1-valor2);
+    }
+
+    function calcularPrecoComDesconto(precoBase,descontoPct,aliqInter,iva,aliqDest){
+      const fator=1-(descontoPct/100);
+      const baseDesc=precoBase*fator;
+      return calcularPreco(baseDesc,aliqInter,iva,aliqDest);
+    }
+
+    function asNumber(value){
+      const n=Number(String(value??'').replace(',','.'));
+      return Number.isFinite(n)?n:0;
+    }
+
+    function getQtdPorCaixa(row){
+      return asNumber(row.quantd_caixa??row.qtd_caixa??row.qtdporcaixa??row.qtd_por_caixa);
+    }
+
+    function parsePct(v){
+      const n=parseFloat(String(v??'').trim().replace(',','.'));
+      if(Number.isNaN(n))return 0;
+      return Math.max(0,Math.min(DESCONTO_MAX,n));
+    }
+
+    function formatPct(n){
+      const hasDecimal=Math.abs(n-Math.round(n))>1e-9;
+      return hasDecimal?n.toFixed(2).replace('.',','):String(Math.round(n));
+    }
+
+    function montarTopo(){
+      const titulo=document.getElementById('titulo');
+      const btnVoltar=document.getElementById('btn-voltar');
+      if(uf&&estados[uf]){
+        titulo.textContent=`Pedido • Mayumi – ${estados[uf]} (${uf})`;
+        btnVoltar.href=`tabela.html?uf=${encodeURIComponent(uf)}`;
+      }else{
+        titulo.textContent='Pedido • Mayumi';
+        btnVoltar.href='index.html';
+        document.getElementById('conteudo').innerHTML='<div class="loading">Selecione um estado primeiro em "Trocar estado".</div>';
+      }
+    }
+    montarTopo();
+
+    const conteudo=document.getElementById('conteudo');
+    let itensPedido=[];
+    let descontoGeral=0;
+
+    /* ===== DADOS DO CLIENTE ===== */
+    function salvarDadosCliente(){
+      const dados={
+        nome:document.getElementById('cliente-nome').value,
+        responsavel:document.getElementById('cliente-responsavel').value,
+        whatsapp:document.getElementById('cliente-whatsapp').value,
+        documento:document.getElementById('cliente-documento').value
+      };
+      localStorage.setItem('pedido_cliente_mayumi',JSON.stringify(dados));
+    }
+
+    function carregarDadosCliente(){
+      try{
+        const dados=JSON.parse(localStorage.getItem('pedido_cliente_mayumi'));
+        if(dados){
+          document.getElementById('cliente-nome').value=dados.nome||'';
+          document.getElementById('cliente-responsavel').value=dados.responsavel||'';
+          document.getElementById('cliente-whatsapp').value=dados.whatsapp||'';
+          document.getElementById('cliente-documento').value=dados.documento||'';
+        }
+      }catch(e){}
+    }
+
+    ['cliente-nome','cliente-responsavel','cliente-whatsapp','cliente-documento'].forEach(id=>{
+      document.getElementById(id).addEventListener('input',salvarDadosCliente);
+    });
+
+    document.getElementById('cliente-documento').addEventListener('blur',()=>validarCampoDocumento(false));
+    document.getElementById('cliente-documento').addEventListener('input',()=>{
+      if(document.getElementById('cliente-documento').classList.contains('invalid')){
+        validarCampoDocumento(false);
+      }
+    });
+
+    carregarDadosCliente();
+
+    /* ===== DESCONTO GERAL ===== */
+    function descontoKey(){
+      return `desconto_geral_mayumi_${(uf||'semuf').toLowerCase()}`;
+    }
+
+    function atualizarPill(pct){
+      document.getElementById('pill-desconto').textContent=formatPct(pct)+'%';
+    }
+
+    function initDescontoGeral(){
+      const inp=document.getElementById('desconto-geral');
+      const btn=document.getElementById('btn-limpar-desconto');
+      const salvo=parsePct(localStorage.getItem(descontoKey()));
+      if(salvo)inp.value=formatPct(salvo);
+      descontoGeral=salvo;
+      atualizarPill(salvo);
+
+      inp.addEventListener('input',()=>{
+        descontoGeral=parsePct(inp.value);
+        atualizarPill(descontoGeral);
+        localStorage.setItem(descontoKey(),String(descontoGeral));
+        aplicarDescontoGeral();
+        recalcularTotais();
+      });
+
+      btn.addEventListener('click',()=>{
+        inp.value='';
+        descontoGeral=0;
+        atualizarPill(0);
+        localStorage.removeItem(descontoKey());
+        aplicarDescontoGeral();
+        recalcularTotais();
+      });
+    }
+
+    function aplicarDescontoGeral(){
+      itensPedido.forEach(item=>{
+        item.desconto=descontoGeral;
+        item.precoUnit=calcularPrecoComDesconto(item.precoBase,item.desconto,item.aliqInter,item.iva,item.aliqDest);
+      });
+      renderTabelaValores();
+    }
+
+    /* ===== RASCUNHO ===== */
+    function salvarRascunho(){
+      const rascunho={
+        uf,
+        descontoGeral,
+        itens:itensPedido.map(i=>({id:i.id,caixas:i.caixas,unidades:i.unidades}))
+      };
+      localStorage.setItem(STORAGE_KEY,JSON.stringify(rascunho));
+    }
+
+    function carregarRascunho(){
+      try{
+        const raw=localStorage.getItem(STORAGE_KEY);
+        if(!raw)return null;
+        const r=JSON.parse(raw);
+        if(r.uf!==uf)return null;
+        return r;
+      }catch(e){return null}
+    }
+
+    /* ===== CÁLCULO ===== */
+    function recalcularTotais(){
+      let itensComQtd=0;
+      let totalUnidades=0;
+      let total=0;
+
+      itensPedido.forEach(item=>{
+        const totalUn=(item.unidades||0)+(item.caixas||0)*(item.qtdPorCaixa||0);
+        item.totalUnidades=totalUn;
+        item.subtotal=totalUn*(item.precoUnit||0);
+        if(totalUn>0){
+          itensComQtd+=1;
+          totalUnidades+=totalUn;
+          total+=item.subtotal;
+        }
+      });
+
+      document.getElementById('kpi-itens').textContent=String(itensComQtd);
+      document.getElementById('kpi-unidades').textContent=String(totalUnidades);
+      document.getElementById('kpi-total').textContent=formatBRL(total);
+
+      itensPedido.forEach(item=>{
+        const tdUn=document.querySelector(`[data-total-unidades="${item.id}"]`);
+        const tdSub=document.querySelector(`[data-subtotal="${item.id}"]`);
+        const tdPreco=document.querySelector(`[data-preco-unit="${item.id}"]`);
+        const tr=document.querySelector(`[data-row-id="${item.id}"]`);
+        if(tdUn)tdUn.textContent=String(item.totalUnidades||0);
+        if(tdSub)tdSub.textContent=formatBRL(item.subtotal||0);
+        if(tdPreco)tdPreco.textContent=formatBRL(item.precoUnit);
+        if(tr){
+          if(item.totalUnidades>0)tr.classList.add('has-qty');
+          else tr.classList.remove('has-qty');
+        }
+      });
+
+      salvarRascunho();
+    }
+
+    function onInputQuantidade(id,campo,value){
+      const item=itensPedido.find(x=>x.id===id);
+      if(!item)return;
+      item[campo]=Math.max(0,Math.trunc(asNumber(value)));
+      recalcularTotais();
+    }
+
+    window.__onPedidoInput=onInputQuantidade;
+
+    /* ===== RENDER ===== */
+    function renderTabelaValores(){
+      itensPedido.forEach(item=>{
+        const tdPreco=document.querySelector(`[data-preco-unit="${item.id}"]`);
+        const tdSub=document.querySelector(`[data-subtotal="${item.id}"]`);
+        if(tdPreco)tdPreco.textContent=formatBRL(item.precoUnit);
+        if(tdSub){
+          const totalUn=(item.unidades||0)+(item.caixas||0)*(item.qtdPorCaixa||0);
+          item.subtotal=totalUn*(item.precoUnit||0);
+          tdSub.textContent=formatBRL(item.subtotal||0);
+        }
+      });
+      recalcularTotais();
+    }
+
+    function renderTabela(){
+      let html=`
+        <table>
+          <thead>
+            <tr>
+              <th class="col-codigo">Código</th>
+              <th class="col-produto">Produto</th>
+              <th class="valor">Preço base</th>
+              <th class="valor">Desconto (%)</th>
+              <th class="valor">Preço unit.</th>
+              <th class="valor">Qtd/caixa</th>
+              <th>Caixas</th>
+              <th>Unidades</th>
+              <th class="valor">Total (un.)</th>
+              <th class="valor">Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      itensPedido.forEach(item=>{
+        html+=`
+          <tr data-row-id="${item.id}">
+            <td class="col-codigo">${item.id}</td>
+            <td class="col-produto">${item.produto}</td>
+            <td class="valor">${formatBRL(item.precoBase)}</td>
+            <td class="valor"><input class="inp-desconto" type="text" inputmode="decimal" value="${item.desconto?formatPct(item.desconto):''}" data-desconto-id="${item.id}" /></td>
+            <td class="valor" data-preco-unit="${item.id}">${formatBRL(item.precoUnit)}</td>
+            <td class="valor">${item.qtdPorCaixa||0}</td>
+            <td class="qtd">
+              <input type="number" min="0" step="1" value="${item.caixas||0}" aria-label="Caixas"
+                oninput="window.__onPedidoInput('${item.id}','caixas',this.value)" />
+            </td>
+            <td class="qtd">
+              <input type="number" min="0" step="1" value="${item.unidades||0}" aria-label="Unidades"
+                oninput="window.__onPedidoInput('${item.id}','unidades',this.value)" />
+            </td>
+            <td class="valor" data-total-unidades="${item.id}">${item.totalUnidades||0}</td>
+            <td class="subtotal" data-subtotal="${item.id}">${formatBRL(item.subtotal||0)}</td>
+          </tr>
+        `;
+      });
+
+      html+='</tbody></table>';
+      conteudo.classList.remove('loading');
+      conteudo.innerHTML=html;
+      document.getElementById('totais-bar').style.display='';
+
+      document.querySelectorAll('.inp-desconto').forEach(inp=>{
+        inp.addEventListener('input',(e)=>{
+          const id=e.target.dataset.descontoId;
+          const item=itensPedido.find(x=>x.id===id);
+          if(!item)return;
+          item.desconto=parsePct(e.target.value);
+          item.precoUnit=calcularPrecoComDesconto(item.precoBase,item.desconto,item.aliqInter,item.iva,item.aliqDest);
+          renderTabelaValores();
+        });
+      });
+
+      recalcularTotais();
+    }
+
+    /* ===== CARREGAR PRODUTOS ===== */
+    function carregarProdutos(){
+      if(!uf||!estados[uf])return;
+
+      initDescontoGeral();
+
+      fetch(SHEET_URL)
+        .then(r=>r.json())
+        .then(dados=>{
+          const ufSheet=uf.toLowerCase();
+          const rascunho=carregarRascunho();
+          const mapRascunho=new Map();
+          if(rascunho&&rascunho.itens){
+            rascunho.itens.forEach(i=>mapRascunho.set(String(i.id),i));
+          }
+
+          itensPedido=dados
+            .map((row,idx)=>{
+              const precoBase=parseFloat(row.precobase);
+              const aliqInter=parseFloat(row[`aliqinter_${ufSheet}`])/100;
+              const iva=parseFloat(row[`iva_${ufSheet}`])/100;
+              const aliqDest=parseFloat(row[`aliqdest_${ufSheet}`])/100;
+              if(isNaN(aliqInter)||isNaN(iva)||isNaN(aliqDest)||isNaN(precoBase))return null;
+
+              const precoFinal=calcularPrecoComDesconto(precoBase,descontoGeral,aliqInter,iva,aliqDest);
+              const id=String(row.codigo??idx);
+              const saved=mapRascunho.get(id)||{};
+
+              return{
+                id,
+                produto:String(row.produto??'').trim(),
+                precoBase,
+                precoUnit:precoFinal,
+                aliqInter,iva,aliqDest,
+                qtdPorCaixa:getQtdPorCaixa(row),
+                desconto:descontoGeral,
+                caixas:saved.caixas||0,
+                unidades:saved.unidades||0,
+                totalUnidades:0,
+                subtotal:0,
+              };
+            })
+            .filter(Boolean);
+
+          if(itensPedido.length===0){
+            conteudo.classList.remove('loading');
+            conteudo.innerHTML='<div class="loading">Nenhum produto disponível para este estado.</div>';
+            return;
+          }
+
+          renderTabela();
+        })
+        .catch(err=>{
+          console.error(err);
+          conteudo.classList.remove('loading');
+          conteudo.innerHTML='<div class="loading">Erro ao carregar dados da planilha.</div>';
+        });
+    }
+
+    /* ===== RESUMO / WHATSAPP ===== */
+    function gerarTextoResumo(){
+      const itens=itensPedido.filter(i=>(i.totalUnidades||0)>0);
+      if(itens.length===0)return'';
+
+      const nome=document.getElementById('cliente-nome').value.trim()||'Não informado';
+      const responsavel=document.getElementById('cliente-responsavel').value.trim();
+      const documento=apenasDigitos(document.getElementById('cliente-documento').value);
+      const agora=new Date();
+      const dataHora=agora.toLocaleDateString('pt-BR')+' às '+agora.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+
+      const linhas=[];
+      linhas.push('📋 *PEDIDO SAPPORO – '+TIPO_PEDIDO+'*');
+      linhas.push('');
+      linhas.push('🏪 *Cliente:* '+nome);
+      if(responsavel)linhas.push('👤 *Responsável:* '+responsavel);
+      if(documento)linhas.push('📄 *CNPJ/CPF:* '+formatarDocumento(documento));
+      linhas.push('📅 *Data:* '+dataHora);
+      if(uf&&estados[uf])linhas.push('🗺️ *Estado:* '+estados[uf]+' ('+uf+')');
+      if(descontoGeral>0)linhas.push('🏷️ *Desconto geral aplicado:* '+formatPct(descontoGeral)+'%');
+      linhas.push('');
+      linhas.push('━━━━━━━━━━━━━━━━━━━');
+      linhas.push('*ITENS DO PEDIDO:*');
+      linhas.push('━━━━━━━━━━━━━━━━━━━');
+      linhas.push('');
+
+      let total=0;
+      let numItem=0;
+      itens.forEach(i=>{
+        numItem++;
+        total+=i.subtotal;
+        const partes=[];
+        if(i.caixas>0)partes.push(i.caixas+' cx');
+        if(i.unidades>0)partes.push(i.unidades+' un');
+        const qtdStr=partes.join(' + ');
+        const caixaInfo=i.qtdPorCaixa>0?' ('+i.qtdPorCaixa+' un/cx)':'';
+        const descInfo=i.desconto>0?' | Desc: '+formatPct(i.desconto)+'%':'';
+        linhas.push(numItem+'. *'+i.produto+'*');
+        linhas.push('   Qtd: '+qtdStr+caixaInfo+' = '+i.totalUnidades+' un'+descInfo);
+        linhas.push('   Preço unit.: '+formatBRL(i.precoUnit)+' | Subtotal: '+formatBRL(i.subtotal));
+        linhas.push('');
+      });
+
+      linhas.push('━━━━━━━━━━━━━━━━━━━');
+      linhas.push('💰 *TOTAL: '+formatBRL(total)+'*');
+      linhas.push('━━━━━━━━━━━━━━━━━━━');
+
+      return linhas.join('\n');
+    }
+
+    function validarPedidoParaEnvio(){
+      const itens=itensPedido.filter(i=>(i.totalUnidades||0)>0);
+      if(itens.length===0){
+        alert('Preencha pelo menos um item com quantidade.');
+        return false;
+      }
+      const nome=document.getElementById('cliente-nome').value.trim();
+      if(!nome){
+        alert('Preencha o nome da loja/razão social antes de enviar.');
+        document.getElementById('cliente-nome').focus();
+        return false;
+      }
+      if(!validarCampoDocumento(true))return false;
+      return true;
+    }
+
+    /* ===== VALIDAÇÃO CPF / CNPJ ===== */
+    function apenasDigitos(v){
+      return String(v||'').replace(/\D/g,'');
+    }
+
+    function formatarDocumento(v){
+      const c=apenasDigitos(v);
+      if(c.length===11)return c.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/,'$1.$2.$3-$4');
+      if(c.length===14)return c.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/,'$1.$2.$3/$4-$5');
+      return v;
+    }
+
+    function ehCPF(c){
+      if(c.length!==11||/^(\d)\1{10}$/.test(c))return false;
+      let soma=0;
+      for(let i=0;i<9;i++)soma+=Number(c[i])*(10-i);
+      let d1=(soma*10)%11; if(d1===10)d1=0;
+      if(d1!==Number(c[9]))return false;
+      soma=0;
+      for(let i=0;i<10;i++)soma+=Number(c[i])*(11-i);
+      let d2=(soma*10)%11; if(d2===10)d2=0;
+      return d2===Number(c[10]);
+    }
+
+    function ehCNPJ(c){
+      if(c.length!==14||/^(\d)\1{13}$/.test(c))return false;
+      const digito=base=>{
+        let peso=base.length-7;
+        let soma=0;
+        for(let i=0;i<base.length;i++){
+          soma+=Number(base[i])*(peso--);
+          if(peso<2)peso=9;
+        }
+        const resto=soma%11;
+        return resto<2?0:11-resto;
+      };
+      return digito(c.slice(0,12))===Number(c[12])&&digito(c.slice(0,13))===Number(c[13]);
+    }
+
+    function validarCampoDocumento(alertar){
+      const input=document.getElementById('cliente-documento');
+      const hint=document.getElementById('documento-hint');
+      const digitos=apenasDigitos(input.value);
+
+      if(!digitos){
+        input.classList.add('invalid');
+        hint.className='hint err';
+        hint.textContent='Campo obrigatório — informe o CPF (11 dígitos) ou CNPJ (14 dígitos).';
+        if(alertar){
+          alert('Informe o CNPJ/CPF do cliente antes de enviar o pedido.');
+          input.focus();
+        }
+        return false;
+      }
+
+      let tipo=null;
+      if(digitos.length===11&&ehCPF(digitos))tipo='CPF';
+      else if(digitos.length===14&&ehCNPJ(digitos))tipo='CNPJ';
+
+      if(tipo){
+        input.classList.remove('invalid');
+        hint.className='hint ok';
+        hint.textContent=tipo+' válido ✔';
+        input.value=formatarDocumento(digitos);
+        return true;
+      }
+
+      input.classList.add('invalid');
+      hint.className='hint err';
+      hint.textContent='Documento inválido — confira os dígitos digitados.';
+      if(alertar){
+        alert('O CNPJ/CPF informado é inválido.\n\nConfira os dígitos: são 11 para CPF e 14 para CNPJ.');
+        input.focus();
+        input.select();
+      }
+      return false;
+    }
+
+    function formatarFone(numeric){
+      const n=String(numeric).replace(/\D/g,'').replace(/^55/,'');
+      if(n.length===11)return`(${n.slice(0,2)}) ${n.slice(2,7)}-${n.slice(7)}`;
+      return numeric;
+    }
+
+    function renderContatos(){
+      const grid=document.getElementById('contato-grid');
+      grid.innerHTML=CONTATOS_COMERCIAL.map((c,i)=>`
+        <button type="button" class="contato-btn" data-contato-index="${i}">
+          <span class="nome">${c.nome}</span>
+          <span class="zap">WhatsApp ${formatarFone(c.telefone)}</span>
+        </button>`).join('');
+      grid.querySelectorAll('[data-contato-index]').forEach(btn=>{
+        btn.addEventListener('click',()=>{
+          enviarParaContato(CONTATOS_COMERCIAL[Number(btn.dataset.contatoIndex)]);
+        });
+      });
+    }
+
+    function abrirEscolhaContato(){
+      if(!validarPedidoParaEnvio())return;
+      if(!gerarTextoResumo())return;
+      if(CONTATOS_COMERCIAL.length===1){
+        enviarParaContato(CONTATOS_COMERCIAL[0]);
+        return;
+      }
+      document.getElementById('modal-contato').classList.add('active');
+    }
+
+    function enviarParaContato(contato){
+      if(!contato)return;
+      const msg=gerarTextoResumo();
+      if(!msg)return;
+      document.getElementById('modal-contato').classList.remove('active');
+      document.getElementById('modal-overlay').classList.remove('active');
+      const url=`https://api.whatsapp.com/send?phone=${contato.telefone}&text=${encodeURIComponent(msg)}`;
+      window.open(url,'_blank','noopener');
+    }
+
+    document.getElementById('btn-whats').addEventListener('click',abrirEscolhaContato);
+
+    document.getElementById('btn-resumo').addEventListener('click',()=>{
+      const msg=gerarTextoResumo();
+      if(!msg){
+        alert('Nenhum item selecionado no pedido.');
+        return;
+      }
+      document.getElementById('modal-texto').textContent=msg;
+      document.getElementById('modal-overlay').classList.add('active');
+    });
+
+    document.getElementById('modal-whats').addEventListener('click',abrirEscolhaContato);
+
+    document.getElementById('contato-cancelar').addEventListener('click',()=>{
+      document.getElementById('modal-contato').classList.remove('active');
+    });
+
+    document.getElementById('modal-contato').addEventListener('click',(e)=>{
+      if(e.target===e.currentTarget){
+        document.getElementById('modal-contato').classList.remove('active');
+      }
+    });
+
+    renderContatos();
+
+    document.getElementById('modal-copiar').addEventListener('click',()=>{
+      const texto=document.getElementById('modal-texto').textContent;
+      navigator.clipboard.writeText(texto).then(()=>{
+        const btn=document.getElementById('modal-copiar');
+        btn.textContent='✅ Copiado!';
+        setTimeout(()=>{btn.textContent='📋 Copiar texto'},2000);
+      }).catch(()=>{
+        alert('Não foi possível copiar. Selecione o texto manualmente.');
+      });
+    });
+
+    document.getElementById('modal-fechar').addEventListener('click',()=>{
+      document.getElementById('modal-overlay').classList.remove('active');
+    });
+
+    document.getElementById('modal-overlay').addEventListener('click',(e)=>{
+      if(e.target===e.currentTarget){
+        document.getElementById('modal-overlay').classList.remove('active');
+      }
+    });
+
+    document.getElementById('btn-imprimir').addEventListener('click',()=>{
+      window.print();
+    });
+
+    document.getElementById('btn-limpar').addEventListener('click',()=>{
+      if(!confirm('Limpar todas as quantidades do pedido?'))return;
+      itensPedido.forEach(i=>{i.caixas=0;i.unidades=0;});
+      renderTabela();
+    });
+
+    carregarProdutos();
+  </script>
+</body>
+</html>
