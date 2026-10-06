@@ -483,6 +483,7 @@
       <ul class="bullets">
         <li><b>•</b> Valores calculados automaticamente conforme a tributação do estado.</li>
         <li><b>•</b> Para cadastro dos produtos, <strong>baixe a planilha</strong>, que já contém todas as informações necessárias.</li>
+        <li><b>•</b> Faça seu pedido <a id="link-pedido" href="pedido.html">aqui</a>.</li>
         <li><b>•</b> Dúvidas: fale com
           <a href="https://api.whatsapp.com/send?phone=551176162242&text=Quero%20mais%20informações%20%28Site%20Sapporo%29" target="_blank" rel="noopener">Mayumi</a>
         </li>
@@ -1044,6 +1045,18 @@ document.addEventListener("input", (e) => {
     recalcularLinha(tr);
   }
 });
+
+// mantém a UF escolhida ao ir para a página de pedido
+function montarLinkPedido() {
+  const link = document.getElementById("link-pedido");
+  if (!link) return;
+
+  const params = new URLSearchParams(window.location.search);
+  const u = (params.get("uf") || "").toUpperCase();
+
+  link.href = `pedido.html?uf=${encodeURIComponent(u)}`;
+}
+document.addEventListener("DOMContentLoaded", montarLinkPedido);
 
 document.getElementById("btn-exportar")
   ?.addEventListener("click", baixarPlanilhaXLSX);
