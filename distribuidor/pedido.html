@@ -132,9 +132,13 @@
     .hint{color:var(--muted);font-size:12px;margin-top:2px}
 
     @media(max-width:860px){
-      .header-inner{grid-template-columns:1fr;justify-items:center;text-align:center}
+      .header{position:static}
+      .header-inner{grid-template-columns:1fr;justify-items:center;text-align:center;padding:10px 16px;gap:8px}
       .brand{min-width:unset;justify-self:center}
       .header-title{min-width:unset;justify-self:center}
+      .header-title h1{font-size:16px}
+      .header-title p{font-size:12px}
+      .logo-img{width:130px}
       .actions{justify-self:center}
       .cliente-grid{grid-template-columns:1fr}
       .col-codigo{display:none}
