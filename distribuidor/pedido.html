@@ -84,6 +84,7 @@
 
     /* Tabela de pedido */
     table{width:100%;border-collapse:separate;border-spacing:0;background:var(--card)}
+    .tbl-scroll{width:100%}
     thead tr{background:var(--brand-red)}
     thead th{position:sticky;top:0;z-index:2;border-radius:8px;background:var(--brand-red);color:#fff;font-weight:800;font-size:13px;text-align:center;padding:12px 10px;border-bottom:1px solid rgba(255,255,255,.20)}
     tbody td{padding:12px 10px;border-bottom:1px solid var(--border);font-size:14px}
@@ -144,6 +145,9 @@
       .col-codigo{display:none}
       .qtd{width:80px}
       .kpi{min-width:120px}
+      .tbl-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+      table{min-width:640px}
+      .col-qtd-caixa,.col-total-un,.col-preco-base{display:none}
       .discount-row{flex-direction:column;align-items:flex-start}
     }
 
@@ -537,18 +541,18 @@
 
     function renderTabela(){
       let html=`
-        <table>
+        <div class="tbl-scroll"><table>
           <thead>
             <tr>
               <th class="col-codigo">Código</th>
               <th class="col-produto">Produto</th>
-              <th class="valor">Preço base</th>
+              <th class="valor col-preco-base">Preço base</th>
               <th class="valor">Desconto (%)</th>
               <th class="valor">Preço unit.</th>
-              <th class="valor">Qtd/caixa</th>
+              <th class="valor col-qtd-caixa">Qtd/caixa</th>
               <th>Caixas</th>
               <th>Unidades</th>
-              <th class="valor">Total (un.)</th>
+              <th class="valor col-total-un">Total (un.)</th>
               <th class="valor">Subtotal</th>
             </tr>
           </thead>
@@ -560,10 +564,10 @@
           <tr data-row-id="${item.id}">
             <td class="col-codigo">${item.id}</td>
             <td class="col-produto">${item.produto}</td>
-            <td class="valor">${formatBRL(item.precoBase)}</td>
+            <td class="valor col-preco-base">${formatBRL(item.precoBase)}</td>
             <td class="valor"><input class="inp-desconto" type="text" inputmode="decimal" value="${item.desconto?formatPct(item.desconto):''}" data-desconto-id="${item.id}" /></td>
             <td class="valor" data-preco-unit="${item.id}">${formatBRL(item.precoUnit)}</td>
-            <td class="valor">${item.qtdPorCaixa||0}</td>
+            <td class="valor col-qtd-caixa">${item.qtdPorCaixa||0}</td>
             <td class="qtd">
               <input type="number" min="0" step="1" value="${item.caixas||0}" aria-label="Caixas"
                 oninput="window.__onPedidoInput('${item.id}','caixas',this.value)" />
@@ -572,13 +576,13 @@
               <input type="number" min="0" step="1" value="${item.unidades||0}" aria-label="Unidades"
                 oninput="window.__onPedidoInput('${item.id}','unidades',this.value)" />
             </td>
-            <td class="valor" data-total-unidades="${item.id}">${item.totalUnidades||0}</td>
+            <td class="valor col-total-un" data-total-unidades="${item.id}">${item.totalUnidades||0}</td>
             <td class="subtotal" data-subtotal="${item.id}">${formatBRL(item.subtotal||0)}</td>
           </tr>
         `;
       });
 
-      html+='</tbody></table>';
+      html+='</tbody></table></div>';
       conteudo.classList.remove('loading');
       conteudo.innerHTML=html;
       document.getElementById('totais-bar').style.display='';
