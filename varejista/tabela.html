@@ -2,7 +2,6 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8" />
-<link rel="icon" href="../assets/img/icon sapporo.ico" type="image/x-icon">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Tabela de Preços</title>
 
@@ -399,6 +398,7 @@
         <li><b>•</b> Valores calculados automaticamente conforme a tributação do estado.</li>
         <li><b>•</b> Para cadastrar a sua Loja, preencha o Formulário clicando  <a id="link-cadastro" href="../cadastro.html" target="_blank" rel="noopener">Aqui</a>.</li>
         <li><b>•</b> Para cadastro dos produtos, <strong>baixe a planilha</strong>, que já contém todas as informações necessárias.</li>
+        <li><b>•</b> Faça seu pedido <a id="link-pedido" href="pedido.html">aqui</a>.</li>
         <li><b>•</b> Compras sem valor mínimo somente na <a href="https://loja.sapporo.com.br" target="_blank" rel="noopener">Loja online</a>.</li>
         <li><b>•</b> Dúvidas: fale com
           <a href="https://api.whatsapp.com/send?phone=5511947922506&text=Quero%20mais%20informações%20%28Site%20Sapporo%29" target="_blank" rel="noopener">Ana</a>
@@ -442,8 +442,19 @@ function montarLinkCadastro() {
   link.href = `../cadastro.html?origem=${encodeURIComponent(ORIGEM_SITE)}&uf=${encodeURIComponent(u)}`;
 }
 
+function montarLinkPedido() {
+  const link = document.getElementById("link-pedido");
+  if (!link) return;
+
+  const params = new URLSearchParams(window.location.search);
+  const u = (params.get("uf") || "").toUpperCase();
+
+  link.href = `pedido.html?uf=${encodeURIComponent(u)}`;
+}
+
 // garante que roda assim que o DOM estiver pronto
 document.addEventListener("DOMContentLoaded", montarLinkCadastro);
+document.addEventListener("DOMContentLoaded", montarLinkPedido);
 
 
 
