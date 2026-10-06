@@ -481,11 +481,11 @@
 
           itensPedido=dados
             .map((row,idx)=>{
-              const precoBase=asNumber(row.precobase);
-              const aliqInter=asNumber(row[`aliqinter_${ufSheet}`])/100;
-              const iva=asNumber(row[`iva_${ufSheet}`])/100;
-              const aliqDest=asNumber(row[`aliqdest_${ufSheet}`])/100;
-              if(!precoBase||!aliqInter||!aliqDest)return null;
+              const precoBase=parseFloat(row.precobase);
+              const aliqInter=parseFloat(row[`aliqinter_${ufSheet}`])/100;
+              const iva=parseFloat(row[`iva_${ufSheet}`])/100;
+              const aliqDest=parseFloat(row[`aliqdest_${ufSheet}`])/100;
+              if(isNaN(aliqInter)||isNaN(iva)||isNaN(aliqDest)||isNaN(precoBase))return null;
 
               const precoFinal=calcularPreco(precoBase,aliqInter,iva,aliqDest);
               const id=String(row.codigo??idx);
