@@ -455,12 +455,12 @@
             <td class="valor">${formatBRL(item.precoUnit)}</td>
             <td class="valor col-qtd-caixa">${item.qtdPorCaixa||0}</td>
             <td class="qtd">
-              <input type="number" min="0" step="1" value="${item.caixas||0}" aria-label="Caixas"
-                oninput="window.__onPedidoInput('${item.id}','caixas',this.value)" />
+              <input type="number" min="0" step="1" value="${item.caixas||''}" placeholder="0" aria-label="Caixas"
+                onfocus="this.select()" onblur="this.value=Number(this.value)>0?String(Math.trunc(Number(this.value))):''" oninput="window.__onPedidoInput('${item.id}','caixas',this.value)" />
             </td>
             <td class="qtd">
-              <input type="number" min="0" step="1" value="${item.unidades||0}" aria-label="Unidades"
-                oninput="window.__onPedidoInput('${item.id}','unidades',this.value)" />
+              <input type="number" min="0" step="1" value="${item.unidades||''}" placeholder="0" aria-label="Unidades"
+                onfocus="this.select()" onblur="this.value=Number(this.value)>0?String(Math.trunc(Number(this.value))):''" oninput="window.__onPedidoInput('${item.id}','unidades',this.value)" />
             </td>
             <td class="valor col-total-un" data-total-unidades="${item.id}">${item.totalUnidades||0}</td>
             <td class="subtotal" data-subtotal="${item.id}">${formatBRL(item.subtotal||0)}</td>
